@@ -30,6 +30,10 @@ texture:
     - title: Baekjoon
       url: "/baekjoon"
 
+
+  # Category List
+  category_list: [ Algorithm, Baekjoon ]
+  
   # generate social links in footer
   social_links:
     twitter: null
