@@ -28,12 +28,6 @@ texture:
     - title: Categories
       url: "/categories"
 
-  
-  # Making Categories
-  category_archieve:
-    type: liquid
-    path: /categories/
-
   # generate social links in footer
   social_links:
     twitter: null
