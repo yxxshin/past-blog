@@ -10,7 +10,7 @@ show_excerpts: true # set to true to show excerpts on the homepage
 sass:
   sass_dir: _sass
 
-permalink: /:categories/:title/
+permalink: /category/:categories/:title/
 texture:
   title: YSS's Study
   tagline: Developer. SSHS 28, SNU ECE 19
@@ -33,7 +33,7 @@ texture:
 
   # Category List
   category_list: [ Algorithm, Baekjoon ]
-  
+
   # generate social links in footer
   social_links:
     twitter: null

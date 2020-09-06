@@ -2,5 +2,5 @@
 layout: category
 title: Baekjoon Solution
 category: Baekjoon
-permalink: '/category/baekjoon/'
+permalink: '/category/baekjoon'
 ---
