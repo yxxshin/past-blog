@@ -21,6 +21,13 @@ texture:
   # If you want to open Comments, uncomment this
   # disqus_shortname: yxxshin-study
 
+  # Making Navigation
+  navigation:
+    - title: Algorithm Theory
+      url: "/algorithm-theory"
+    - title: Baekjoon
+      url: "/baekjoon"
+
   # generate social links in footer
   social_links:
     twitter: null
