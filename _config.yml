@@ -27,6 +27,14 @@ texture:
       url: "/algorithm"
     - title: Baekjoon
       url: "/baekjoon"
+    - title: Categories
+      url: "/categories"
+
+  
+  # Making Categories
+  category_archieve:
+    type: liquid
+    path: /categories/
 
   # generate social links in footer
   social_links:
