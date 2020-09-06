@@ -1,9 +1,18 @@
 ---
 layout: default
 ---
-
-<div class="catalogue">
-    <h1 class="category-title"><a href="/category/Github Page Jekyll 에 카테고리 추가하기">Github Page Jekyll 에 카테고리 추가하기</a></h1>
-    
-    
-</div>
+<ul class="posts-list">
+  
+  {% assign category = page.category | default: page.title %}
+  {% for post in site.categories[category] %}
+    <li>
+      <h3>
+        <a href="{{ site.baseurl }}{{ post.url }}">
+          {{ post.title }}
+        </a>
+        <small>{{ post.date | date_to_string }}</small>
+      </h3>
+    </li>
+  {% endfor %}
+  
+</ul>
