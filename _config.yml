@@ -18,7 +18,8 @@ texture:
   style: black
   showNav: true
   showPicker: false
-  disqus_shortname: yxxshin-study
+  # If you want to open Comments, uncomment this
+  # disqus_shortname: yxxshin-study
 
   # generate social links in footer
   social_links:
