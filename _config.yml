@@ -1,9 +1,9 @@
 remote_theme: thelehhman/texture
 theme: texture
 
-title: Texture Theme
-author: GitHub User
-email: your-email@domain.com
+title: YSS's Study
+author: Yeonsang Shin
+email: samshin3910@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
@@ -17,8 +17,8 @@ sass:
 
 permalink: /posts/:title/
 texture:
-  title: Adam Denisov
-  tagline: Developer. Designer
+  title: YSS's Study
+  tagline: Developer. SSHS 28, SNU ECE 19
   date_format: "%b %-d, %Y"
   style: black
   showNav: false
