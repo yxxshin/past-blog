@@ -1,18 +1,34 @@
----
-layout: default
----
-<ul class="posts-list">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{%- include head.html -%}
+</head>
+<body>
+	<header class="texture-{{ site.texture.style }}">
+		<div class="container">
+			{%- include nav.html -%}
+		</div>
+		{%- include page_header.html -%}	
+	</header>
+	<main>
+		<div class="container">
+			<ul class="posts-list">
   
-  {% assign category = page.category | default: page.title %}
-  {% for post in site.categories[category] %}
-    <li>
-      <h3>
-        <a href="{{ site.baseurl }}{{ post.url }}">
-          {{ post.title }}
-        </a>
-        <small>{{ post.date | date_to_string }}</small>
-      </h3>
-    </li>
-  {% endfor %}
-  
-</ul>
+                {% assign category = page.category | default: page.title %}
+                {% for post in site.categories[category] %}
+                  <li>
+                    <h3>
+                      <a href="{{ site.baseurl }}{{ post.url }}">
+                        {{ post.title }}
+                      </a>
+                      <small>{{ post.date | date_to_string }}</small>
+                    </h3>
+                  </li>
+                {% endfor %}
+                
+              </ul>
+		</div>
+	</main>
+	{%- include footer.html -%}
+</body>
+</html>
