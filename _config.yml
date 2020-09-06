@@ -5,9 +5,7 @@ title: YSS's Study
 author: Yeonsang Shin
 email: samshin3910@gmail.com
 description: > # this means to ignore newlines until "show_exerpts:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  틈틈이 공부하는 것들
 show_excerpts: true # set to true to show excerpts on the homepage
 
 # Minima date format
@@ -21,7 +19,7 @@ texture:
   tagline: Developer. SSHS 28, SNU ECE 19
   date_format: "%b %-d, %Y"
   style: black
-  showNav: false
+  showNav: true
   showPicker: true
 
   # generate social links in footer
@@ -29,7 +27,6 @@ texture:
     twitter: null
     github:  yxxshin
     linkedIn: null
-    instagram: yxxshin0209
     rss: rss
  
 
