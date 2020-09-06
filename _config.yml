@@ -23,10 +23,8 @@ texture:
 
   # Making Navigation
   navigation:
-    - title: Algorithm Theory
-      url: "/algorithm"
-    - title: Baekjoon
-      url: "/baekjoon"
+    - title: Home
+      url: "/"
     - title: Categories
       url: "/categories"
 
