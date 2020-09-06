@@ -1,14 +1,14 @@
 ---
 layout: post
-title:  "Examples of Writing Posts (MarkDown)"
+title:  "How to write Posts(MarkDown)"
 description: Examples of MarkDown
 date:   2020-09-07 04:31:36 +0900
 ---
-## 위치 찾기
+### 위치 찾기
 [블로그 GitHub][git]의 **_posts** 파일 안에 블로그 포스트들이 담깁니다.  
 2020-09-07-제목-제목.markdown 형태의 파일들로 저장한 후, git push 해주면 됩니다.
 
-## 서두 적기 (제목, 설명, 카테고리, 날짜)
+### 서두 적기 (제목, 설명, 카테고리, 날짜)
 MarkDown 파일의 서두는 다음과 같은 양식을 따릅니다.
 ``` 
 ---
@@ -20,7 +20,7 @@ categories: 카테고리1 카테고리2
 ---
 ```
 
-## MarkDown 문법
+### MarkDown 문법
 기본적인 문법은 [위키백과][wiki]를 통해 확인할 수 있습니다.  
 자주 쓰는 문법에는 다음과 같은 것들이 있습니다.  
 1. 줄바꿈: 문장 끝에 Space 두 번
@@ -28,10 +28,10 @@ categories: 카테고리1 카테고리2
 3. 이탤릭체: * 문구 *
 4. 볼드체: ** 문구 **
 
-## 코드 적기
+### 코드 적기
 코드를 기준으로 역따옴표를 세 번 위 아래로 적어주면 됩니다.   
 
-## 하이퍼링크 걸기
+### 하이퍼링크 걸기
 문장 안에는 **[ 문구 ][별명]** 과 같은 식으로 붙여주고,  
 MarkDown 문서의 맨 뒤에 **[별명]: URL주소** 와 같은 식으로 넣어줍니다.  
 ex: 아래의 Imgur 사이트의 경우,
@@ -41,12 +41,12 @@ ex: 아래의 Imgur 사이트의 경우,
 [Imgur]: https://imgur.com/user/YeonsangShin
 ```
 
-## 사진 넣기
+### 사진 넣기
 사진의 경우 필자는 Imgur 사이트에 사진을 올리고, 사진 URL을 얻는 방식으로 업로드합니다.  
 [필자의 Imgur 사이트][Imgur]  
 URL을 만들었다면, 다음과 같은 방식으로 사진을 넣어줄 수 있습니다.
 ```
-[사진별명](URL)
+[사진별명](URL.jpg)
 ```
 
 [git]: https://github.com/yxxshin/yxxshin.github.io
