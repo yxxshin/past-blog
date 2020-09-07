@@ -1,5 +1,6 @@
 ---
 layout: blogbytag
-tag: image
+title: Tag_sorting
+tag: sorting
 permalink: /tags/sorting
 ---

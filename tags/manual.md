@@ -1,5 +1,6 @@
 ---
 layout: blogbytag
-tag: image
+title: Tag_manual
+tag: manual
 permalink: /tags/manual
 ---
