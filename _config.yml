@@ -50,7 +50,7 @@ tipque_search:
     pages: false      # pages 레이아웃은 검색하지 않는다
     collections: []
   exclude:
-    files: [search.html, index.html, tags.html]   # 검색 항목에서 제외
+    files: [search.html, index.html, tags.html, page.html]   # 검색 항목에서 제외
     categories: []
     tags: []
 
