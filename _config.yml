@@ -27,8 +27,6 @@ texture:
       url: "/"
     - title: Algorithm
       url: "/category/algorithm"
-    - title: Baekjoon
-      url: "/category/baekjoon"
     - title: Search
       url: "/search"
 
