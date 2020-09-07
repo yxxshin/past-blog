@@ -26,6 +26,8 @@ texture:
   navigation:
     - title: Home
       url: "/"
+    - title: Tags
+      url: "/tags"
     - title: Algorithm
       url: "/category/algorithm"
     - title: Baekjoon
