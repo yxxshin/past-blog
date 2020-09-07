@@ -18,7 +18,6 @@ texture:
   style: black
   showNav: true
   showPicker: false
-  showSearchBar: true
   # If you want to open Comments, uncomment this
   # disqus_shortname: yxxshin-study
 
