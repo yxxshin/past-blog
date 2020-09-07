@@ -1,0 +1,53 @@
+---
+layout: post
+title: "Baekjoon 9663 (N-Queen)"
+date:   2020-03-08 17:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ backtracking ]
+---
+
+[문제 보기][prob]  
+
+```c++
+#include <stdio.h>
+#include <stdbool.h>
+
+int result=0, N;
+
+// 체스판 구현. i번째 행의 퀸의 위치를 chess[i]
+int chess[15];
+
+// chess[i], chess[j]가 같은 대각선/열에 놓이면 false를 배출
+bool isOkay(int line){
+ for(int i=1; i<line; i++) {
+  if(chess[i]==chess[line] || abs(chess[line]-chess[i]) == line-i)
+   return false;
+ }
+ return true;
+}
+ 
+// 뽑아야 하는 줄을 line에 입력
+void QueenNum(int line){
+ if(line==N+1) {
+  result++;
+  return;
+ }
+ 
+ for(int i=1; i<=N; i++) {
+  chess[line] = i;
+  if(isOkay(line))
+   QueenNum(line+1);
+ }
+}
+
+int main(void) {
+ scanf("%d",&N);
+ QueenNum(1);
+ printf("%d",result);
+}
+```
+
+Backtracking을 이용한 첫 번째 문제였다.  
+chess판을 1차원 배열로 생각하였고, 대각선에 놓이는 것을 뺄셈을 이용해 해결하였다.
+
+[prob]: https://www.acmicpc.net/problem/9663
