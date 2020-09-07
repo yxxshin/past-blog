@@ -10,7 +10,7 @@ show_excerpts: true # set to true to show excerpts on the homepage
 sass:
   sass_dir: _sass
 
-permalink: /category/:category/:title/
+permalink: /category/:categories/:title/
 texture:
   title: YSS's Study
   tagline: Developer. SSHS 28, SNU ECE 19

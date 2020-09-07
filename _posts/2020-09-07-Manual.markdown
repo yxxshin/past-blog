@@ -3,8 +3,8 @@ layout: post
 title:  "How to write Posts(MarkDown)"
 description: Examples of MarkDown
 date:   2020-09-07 04:31:36 +0900
-category: [ Others ]
-categories: [ Others, Manual ]
+categories: [ Others ]
+tags: [ Manual ]
 ---
 ### 위치 찾기
 [블로그 GitHub][git]의 **_posts** 파일 안에 블로그 포스트들이 담깁니다.  
