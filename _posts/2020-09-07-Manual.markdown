@@ -18,7 +18,8 @@ layout: post
 title: "제목 적기"
 description: 게시물 설명 적기 (제목 아래에 적힘)
 date:   2020-09-07 04:00:30 +0900 형식으로 적기
-categories: 카테고리1 카테고리2
+categories: [ 카테고리1 ]
+tags: [ 태그1, 태그2 ]
 ---
 ```
 
@@ -52,11 +53,29 @@ URL을 만들었다면, 다음과 같은 방식으로 사진을 넣어줄 수 �
 ```
 
 ### 태그 만들기
-
+1. /tags 아래에 TagName.md 의 markdown 파일을 만든다. 
+2. 다음의 형식(예시)을 따라 markdown 파일을 완성한다.  
+```
+---
+layout: blogbytag
+title: Tag_sorting
+tag: sorting
+permalink: /tags/sorting
+---
+```
 
 
 ### 카테고리 만들기
-
+1. /category 아래에 CategoryName.md 의 markdown 파일을 만든다.
+2. 다음의 형식(예시)을 따라 markdown 파일을 완성한다.
+```
+---
+layout: category
+title: Algorithm Theory
+category: Algorithm
+permalink: '/category/algorithm'
+---
+```
 
 
 
