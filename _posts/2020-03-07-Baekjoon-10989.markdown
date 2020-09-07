@@ -6,7 +6,8 @@ categories: [ Baekjoon ]
 tags: [ sorting ]
 ---
 
-[문제 보기][prob]
+[문제 보기][prob]  
+
 ```c++
 #include <stdio.h>
 #define MAX_NUM 10000
