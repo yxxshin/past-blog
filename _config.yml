@@ -29,9 +29,6 @@ texture:
       url: "/category/algorithm"
     - title: Baekjoon
       url: "/category/baekjoon"
-    - title: Search
-      url: "/search"
-
 
   # Category List
   category_list: [ Algorithm, Baekjoon ]
