@@ -3,8 +3,7 @@ layout: post
 title:  "How to write Posts(MarkDown)"
 description: Examples of MarkDown
 date:   2020-09-07 04:31:36 +0900
-categories: [ Others ]
-tags: [ Manual ]
+categories: [ Others, Manual ]
 ---
 ### 위치 찾기
 [블로그 GitHub][git]의 **_posts** 파일 안에 블로그 포스트들이 담깁니다.  
@@ -50,6 +49,15 @@ URL을 만들었다면, 다음과 같은 방식으로 사진을 넣어줄 수 �
 ```
 [사진별명](URL.jpg)
 ```
+
+### 태그 만들기
+
+
+
+### 카테고리 만들기
+
+
+
 
 [git]: https://github.com/yxxshin/yxxshin.github.io
 [wiki]: https://ko.wikipedia.org/wiki/%EB%A7%88%ED%81%AC%EB%8B%A4%EC%9A%B4
