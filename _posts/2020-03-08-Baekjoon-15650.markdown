@@ -1,0 +1,49 @@
+---
+layout: post
+title: "Baekjoon 15650 (N과 M(2))"
+date:   2020-03-08 16:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ backtracking ]
+---
+
+[문제 보기][prob]  
+
+```c++
+#include <stdio.h>
+#include <stdbool.h>
+
+int N, M;
+int arr[10];
+bool check[10]; // 기본이 false(0)이다
+
+// count가 뽑은 갯수, current가 시작점 (current 이상의 수들로만 수열이 구성되어야 함)
+void pick(int count, int current) {
+    if(count==M) {  // M개 숫자를 모두 뽑음
+        for(int i=0; i<M; i++)
+            printf("%d ", arr[i]); // 모두 출력
+        printf("\n");
+        return;
+    }
+
+    for(int i=current; i<=N; i++){
+        if(!check[i]){
+            check[i] = true;
+            arr[count] = i;     // i번 숫자를 뽑음
+            pick(count+1,i+1);     // pick 재귀호출, 다음 깊이(숫자)로 들어감
+            check[i] = false;
+        }
+    }
+}
+
+int main(){
+    scanf("%d %d",&N, &M);
+    pick(0,1);
+    return 0;
+}
+```
+
+Backtracking의 기본적인 형태이다.  
+코드를 살짝 변형하면 N과 M 시리즈 1~4를 모두 해결할 수 있었다.
+
+
+[prob]: https://www.acmicpc.net/problem/15650
