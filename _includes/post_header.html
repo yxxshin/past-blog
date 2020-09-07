@@ -7,11 +7,9 @@
 	</div>
 	<ul class="post-tags">
 		{%- for tag in page.tags -%}
-			{%- if site.data.tags contains tag -%}
-				<a href = "{{ site.url }}/category/{{ page.categories }}{{ tag }}" >
-					<li>{{ site.data.format[tag] }}</li>
-				</a>
-			{%- endif -%}
+			<a href = "{{ site.url }}/category/{{ page.categories }}/{{ tag.slug }}" >
+				<li>{{ tag.name }}</li>
+			</a>
 		{%- endfor -%}
 	</ul>
 </div>
