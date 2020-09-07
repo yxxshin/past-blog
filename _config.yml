@@ -15,7 +15,7 @@ texture:
   title: YSS's Study
   tagline: Developer. SSHS 28, SNU ECE 19
   date_format: "%b %-d, %Y"
-  style: black
+  style: blue
   showNav: true
   showPicker: false
   # If you want to open Comments, uncomment this
