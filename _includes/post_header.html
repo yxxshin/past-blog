@@ -8,7 +8,7 @@
 	<ul class="post-tags">
 		{%- for tag in page.tags -%}
 			{%- if site.data.tags contains tag -%}
-				<a href = "{{ site.url }}/category/{{ page.category }}{{ tag }}" >
+				<a href = "{{ site.url }}/category/{{ page.categories }}{{ tag }}" >
 					<li>{{ site.data.format[tag] }}</li>
 				</a>
 			{%- endif -%}
