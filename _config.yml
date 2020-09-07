@@ -15,7 +15,7 @@ texture:
   title: YSS's Study
   tagline: Developer. SSHS 28, SNU ECE 19
   date_format: "%b %-d, %Y"
-  style: blue
+  style: black
   showNav: true
   showPicker: false
   # If you want to open Comments, uncomment this
@@ -48,10 +48,10 @@ texture:
 # Tipque Search
 tipque_search:
   include:
-    pages: false      // pages 레이아웃은 검색하지 않는다
+    pages: false      # pages 레이아웃은 검색하지 않는다
     collections: []
   exclude:
-    files: [search.html, index.html, tags.html]   // 검색 항목에서 제외
+    files: [search.html, index.html, tags.html]   # 검색 항목에서 제외
     categories: []
     tags: []
 
