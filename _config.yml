@@ -29,9 +29,11 @@ texture:
       url: "/category/algorithm"
     - title: Baekjoon
       url: "/category/baekjoon"
+    - title: Others
+      url: "/category/others"
 
   # Category List
-  category_list: [ Algorithm, Baekjoon ]
+  category_list: [ Algorithm, Baekjoon, Others ]
 
   # generate social links in footer
   social_links:
