@@ -29,6 +29,8 @@ texture:
       url: "/category/algorithm"
     - title: Baekjoon
       url: "/category/baekjoon"
+    - title: Search
+      url: "/search"
 
 
   # Category List
@@ -43,6 +45,15 @@ texture:
     instagram: yxxshin0209
     baekjoon: samshin3910
  
+# Tipque Search
+tipque_search:
+  include:
+    pages: false      // pages 레이아웃은 검색하지 않는다
+    collections: []
+  exclude:
+    files: [search.html, index.html, tags.html]   // 검색 항목에서 제외
+    categories: []
+    tags: []
 
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
