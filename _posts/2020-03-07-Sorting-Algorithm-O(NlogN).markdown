@@ -16,9 +16,9 @@ tags: [ sorting ]
 
 힙은 표준적으로 배열을 이용하여 저장한다(사진 참고). 쉬운 구현을 위해 index 0을 사용하지 않으며 (즉, 1부터 시작), index들은 다음과 같은 관계를 가진다.
 
-1) 왼쪽 자식의 index = (부모의 index) * 2
-2) 오른쪽 자식의 index = (부모의 index) * 2 + 1
-3) 부모의 index = (자식의 index) / 2
+1. 왼쪽 자식의 index = (부모의 index) * 2
+2. 오른쪽 자식의 index = (부모의 index) * 2 + 1
+3. 부모의 index = (자식의 index) / 2
 
 ![힙저장](https://imgur.com/ylBc3Re.png)
 다음과 같이 구조체를 이용하여 표현해 볼 수 있다.
