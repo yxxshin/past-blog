@@ -1,5 +1,5 @@
 ---
-layout: blog_by_tag
+layout: blogbytag
 tag: image
 permalink: /tags/sorting
 ---
