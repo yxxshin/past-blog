@@ -3,7 +3,7 @@ layout: post
 title: "Linux Study (19.08.19 ~ 19.08.29)"
 description: 리눅스 공부 요약 (생활코딩)
 date:   2020-03-09 15:00:00 +0900
-categories: [ Algorithm ]
+categories: [ Others ]
 tags: [ linux ]
 ---
 
@@ -245,7 +245,6 @@ ex) server : client가 browser를 통해 요청 할 때 바로 응답해야 하�
 
 
 ## Linux - daemon 2 : service & auto start
-
 ex) sudo apt -get install apache2 : apache2 다운로드  
 sudo **service** apache2 start : apache2 시작  
 sudo service apache2 stop : apache2 멈춤   
