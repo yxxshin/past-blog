@@ -24,3 +24,4 @@ D[i][j] 의 2차원 배열을 선언하는데, 이는 i번째 보석까지 탐�
 필자의 코드는 [여기][my] 에서 확인할 수 있다.
 
 [prob]: https://www.acmicpc.net/problem/12865
+[my]: https://yxxshin.github.io/category/baekjoon/Baekjoon-12865/
