@@ -48,3 +48,4 @@ LCS 알고리즘은 두 수열을 2차원 표에 적으면서 시작된다.
 [사진출처][pic]
 
 [pic]: https://hooit.tistory.com/entry/LCSLongest-Common-Subsequence-%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98-C%EC%96%B8%EC%96%B4
+[code]: https://yxxshin.github.io/category/baekjoon/Baekjoon-9251/
