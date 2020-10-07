@@ -1,0 +1,126 @@
+---
+layout: post
+title: "Baekjoon 1931 (회의실배정)"
+date:   2020-05-03 15:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ backtracking ]
+---
+
+[문제보기][prob]
+```c++
+#include <stdio.h>
+#include <stdbool.h>
+#define MAX_NUM 100000
+#define SWAP(a, b, type) do{\
+    type temp;\
+    temp = a; \
+    a = b; \
+    b = temp; \
+} while(0)
+
+// Idea: 각 시점마다 종료 시간이 가장 이른 회의를 선택 (그리디 알고리즘)
+
+typedef struct{
+    unsigned int start;
+    unsigned int end;
+} meeting;
+
+int N, heap_len = 0;
+meeting heap[MAX_NUM+1];
+
+// 끝 시간이 이르거나, 끝 시간이 같은데 시작 시간이 이르면
+// 우선도가 높다고 생각. x가 y보다 우선도가 높으면 check(x,y)=true;
+bool check(int x, int y){
+    if(heap[x].end < heap[y].end || (heap[x].end==heap[y].end && heap[x].start < heap[y].start) ){
+        return true;
+    }
+
+    else return false;
+}
+
+// 힙 추가
+void add_heap(meeting* heap, meeting meeting_new){
+    if(heap_len == 0){
+        heap[1] = meeting_new;
+        heap_len++;
+    }
+
+    else if(heap_len > 0) {
+        heap[++heap_len] = meeting_new;
+        int x = heap_len;
+        while(x>1){
+            if(check(x, x/2)){
+                SWAP(heap[x], heap[x/2], meeting);
+                x /= 2;
+            }
+            else break;
+        }
+    }
+}
+
+// 최상단 힙 제거
+meeting delete_heap(meeting* heap){
+    // 최상단 힙을 min에 넣고, 최상단 힙과 마지막 번호 힙 교환하기
+    // 힙 크기를 하나 줄이면 마지막 번호에 들어간 힙은 없어짐.
+    meeting min = heap[1];
+    SWAP(heap[1], heap[heap_len], meeting);
+    heap_len--;
+
+    // 정렬
+    int parent = 1, child = 2;
+    while(child <= heap_len){
+        // 우선도 높은 자식 노드 찾기
+        if(check(child+1, child) && (child<heap_len)) child++;
+
+        // 우선도 더 높은 자식 노드보다 부모 노드가 더 높으면 정지
+        if(check(parent,child)) break;
+
+        // 그렇지 않으면, 부모와 자식 교환
+        SWAP(heap[parent],heap[child],meeting);
+        parent = child;
+        child *= 2;
+    }
+
+    return min;
+
+}
+
+
+int main(){
+    int current_time = 0; // 현재까지 선택된 마지막 회의의 시간
+    int count = 0;  // 현재까지 선택된 회의 갯수
+
+    scanf("%d",&N);
+
+    // 회의 시간들 입력받기
+    for(int i=0; i<N; i++){
+        meeting temp;
+        scanf("%d %d",&temp.start,&temp.end);
+        add_heap(heap,temp);
+    }
+
+    meeting current_meeting;
+
+    while(heap_len>0){
+        // 우선도 가장 높은 힙이 현재 선택된 회의와 시간이 겹치지 않는다면, 선택
+        if(heap[1].start >= current_time){
+            current_meeting = delete_heap(heap);
+            count++;
+            current_time = current_meeting.end;
+        }
+
+        // 그렇지 않다면 그냥 힙 버림
+        else {;
+            current_meeting = delete_heap(heap);
+        }
+    }
+
+    printf("%d",count);
+}
+```
+각 시점마다 종료 시간이 가장 이른 회의를 선택하는 그리디 알고리즘을 이용해서 풀었다.  
+Heap sort를 이용하여 시간 초과가 나지 않도록 하였다. Heap sort를 쉽게 구현할 수 있도록 도와준 지환에게 감사의 말을 전한다. 
+
+
+
+[prob]: https://www.acmicpc.net/problem/1931
