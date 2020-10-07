@@ -1,0 +1,75 @@
+---
+layout: post
+title: "Baekjoon 1966 (프린터 큐)"
+date:   2020-07-10 18:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ queue ]
+---
+
+[문제보기][prob]
+
+```c++
+#include <iostream>
+using namespace std;
+
+int main() {
+    int test_case, N, M;
+    bool answer_printed = false;
+    cin >> test_case;
+
+    while(test_case--){
+        cin >> N >> M;
+        // initialization
+        int* arr = new int[1000000];
+        int start = 0, last = N;
+        int count = 1;
+        int max_imp = 0;
+        for(int i=0; i<N; i++) {
+            cin >> arr[i];
+            if(arr[i] > max_imp) max_imp = arr[i];
+        }
+        // ordering
+        while(last - start != 1){
+            // pop_and_push_it_back
+            if(arr[start] != max_imp) {
+                // moving M
+                if(start == M) M = last;
+                arr[last] = arr[start];
+                start++;
+                last++;
+                continue;
+            }
+
+            // pop max_importance
+            else if(arr[start] == max_imp) {
+                // answer choice
+                if(start == M) {
+                    cout << count << '\n';
+                    answer_printed = true;
+                    break;
+                }
+                // not the answer choice
+                else {
+                    count++;
+                    start++;
+                    // find the next max_imp
+                    max_imp = 0;
+                    for(int j = start; j < last; j++) if(arr[j] > max_imp) max_imp = arr[j];
+                    continue;
+                }
+            }
+        }
+        // only one input
+        if(!answer_printed) cout  << count << '\n';
+        answer_printed = false;
+        delete[] arr;
+    }
+}
+```
+
+Queue를 응용하는 문제!  
+요런 유형의 문제는, 문제를 보고 "Queue를 사용해야겠다!"를 빨리 떠올리는 것이 관건인 것 같다  
+(비록 현재는 단원 명에 표시되어 있지만..)
+
+
+[prob]: https://www.acmicpc.net/problem/1966 
