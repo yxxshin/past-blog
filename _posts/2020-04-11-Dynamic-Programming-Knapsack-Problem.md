@@ -2,7 +2,7 @@
 layout: post
 title: "Dynamic Programming - Knapsack Problem"
 description: Dynamic Programming을 이용한 Knapsack problem
-date:   2020-03-20 15:00:00 +0900
+date:   2020-04-11 15:00:00 +0900
 categories: [ Algorithm ]
 tags: [ dp ]
 ---

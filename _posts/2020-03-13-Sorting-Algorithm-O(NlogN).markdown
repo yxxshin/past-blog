@@ -2,7 +2,7 @@
 layout: post
 title: "Sorting Algorithm - O(NlogN)"
 description: 조금 더 빨라진 정렬 알고리즘
-date:   2020-03-07 15:00:00 +0900
+date:   2020-03-13 15:00:00 +0900
 categories: [ Algorithm ]
 tags: [ sorting ]
 ---

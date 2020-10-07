@@ -7,6 +7,10 @@ categories: [ Others ]
 tags: [ manual ]
 ---
 
+SWAP을 자주 사용하는 경우에는, 아래와 같이 임의의 type에 대한 SWAP 함수를 매크로로 지정해 놓으면 편하다.   
+(특히, C 언어에서!)
+
+
 ```c++
 #define SWAP(a,b,type) do{ \
     type temp; \

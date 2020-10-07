@@ -2,7 +2,7 @@
 layout: post
 title: "Greedy Algorithm"
 description: Greedy Algorithm에 대하여
-date:   2020-03-23 15:00:00 +0900
+date:   2020-04-25 15:00:00 +0900
 categories: [ Algorithm ]
 tags: [ greedy ]
 ---

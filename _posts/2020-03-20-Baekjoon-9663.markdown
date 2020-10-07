@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Baekjoon 9663 (N-Queen)"
-date:   2020-03-08 17:30:00 +0900
+date:   2020-03-20 17:30:00 +0900
 categories: [ Baekjoon ]
 tags: [ backtracking ]
 ---

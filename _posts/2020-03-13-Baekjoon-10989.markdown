@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Baekjoon 10989 (수 정렬하기 3)"
-date:   2020-03-07 16:30:00 +0900
+date:   2020-03-13 16:30:00 +0900
 categories: [ Baekjoon ]
 tags: [ sorting ]
 ---

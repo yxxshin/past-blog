@@ -2,7 +2,7 @@
 layout: post
 title: "Linux Study (19.08.19 ~ 19.08.29)"
 description: 리눅스 공부 요약 (생활코딩)
-date:   2020-03-09 15:00:00 +0900
+date:   2020-03-23 15:00:00 +0900
 categories: [ Others ]
 tags: [ linux ]
 ---
