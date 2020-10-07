@@ -1,0 +1,52 @@
+---
+layout: post
+title: "Baekjoon 1541 (잃어버린 괄호)"
+date:   2020-05-03 17:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ backtracking ]
+---
+
+[문제보기][prob]
+```c++
+#include <stdio.h>
+
+char input[51];
+int temp = 0, result = 0;
+int math = 1; // 양수이면 기본. 음수이면 앞에 뺄셈이 있는 상황
+int check = 0; // +가 입력되면 1, -가 입력되면 -1,종료 시 2
+
+int main(){
+    scanf("%s", input);
+    for(int i=0; i<51; i++){
+        if(check != 0){
+            (math > 0) ? (result += temp) : (result -= temp);
+            if(check==2) break;
+            math *= check;
+            check = 0;
+            temp = 0;
+        }
+        if(input[i+1]==0){
+            temp = temp * 10 + input[i]-'0';
+            check = 2;
+        }
+
+        else if(input[i] == '+')
+            check = 1;
+
+        else if(input[i] == '-'){
+            if(math==(-1)) check = 1;
+            else check = -1;
+        }
+
+        else temp = temp * 10 + input[i]-'0';
+    }
+
+    printf("%d",result);
+}
+```
+
+스터디 톡방에서 <stdio.h> 만 include하여 풀었다고 다들 자랑스러워 하여,
+본인도 최대한 <stdio.h>만 이용하여 풀었던 문제 ㅎㅎ   
+math, check 이라는 두 가지 변수를 직접 설정하여 나만의 아이디어로 해결하였다!
+
+[prob]:  https://www.acmicpc.net/problem/1541
