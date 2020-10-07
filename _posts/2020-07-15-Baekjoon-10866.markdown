@@ -1,0 +1,89 @@
+---
+layout: post
+title: "Baekjoon 10866 (덱)"
+date:   2020-07-15 15:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ deque ]
+---
+
+[문제보기][prob]
+
+```c++
+#include <iostream>
+#include <string>
+using namespace std;
+
+int* arr = new int[100010];
+int start = 5000;
+int last = 5001;
+
+void deque_func(string s) {
+    int num = 0;
+    if(s == "push_front") {
+        cin >> num;
+        arr[start] = num;
+        start--;
+    }
+
+    else if(s == "push_back") {
+        cin >> num;
+        arr[last] = num;
+        last++;
+    }
+
+    else if(s == "pop_front") {
+        if(last - start == 1) cout << -1 << '\n';
+        else {
+            cout << arr[start + 1] << '\n';
+            start++;
+        }
+    }
+
+    else if(s == "pop_back") {
+        if(last - start == 1) cout << -1 << '\n';
+        else {
+            cout << arr[last - 1] << '\n';
+            last--;
+        }
+    }
+
+    else if(s == "size") {
+        cout << last - start - 1 << '\n';
+    }
+
+    else if(s == "empty") {
+        if(last - start == 1) cout << 1 << '\n';
+        else cout << 0 << '\n';
+    }
+
+    else if(s == "front"){
+        if(last - start == 1) cout << -1 << '\n';
+        else cout << arr[start + 1] << '\n';
+    }
+
+    else if(s == "back"){
+        if(last - start == 1) cout << -1 << '\n';
+        else cout << arr[last - 1] << '\n';
+    }
+}
+
+int main() {
+    int N;
+    cin >> N;
+
+
+    while(N--){
+        string input_s;
+        cin >> input_s;
+        deque_func(input_s);
+    }
+
+    delete[] arr;
+}
+```
+
+앞의 Queue와 마찬가지로 STL을 사용하지 않고 배열을 이용하여 생 구현했다.
+Queue와 같이 start와 last 변수를 사용하였는데,   
+Deque의 경우에는 앞쪽으로도 데이터가 입력될 수 있어서 start과 last 값을 중앙(5000 부근)으로 두었다.
+
+[prob]: https://www.acmicpc.net/problem/10866
