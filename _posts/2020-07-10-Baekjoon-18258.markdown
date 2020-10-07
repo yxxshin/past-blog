@@ -1,0 +1,78 @@
+---
+layout: post
+title: "Baekjoon 18258 (큐 2)"
+date:   2020-07-10 15:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ queue ]
+---
+
+[문제보기][prob]
+
+```c++
+#include <iostream>
+#include <string>
+using namespace std;
+#define size 20000001
+
+int* arr = new int[size];
+int last = 0;
+int start = 0;
+
+void switch_string(string s){
+    if(s == "push"){
+        int num;
+        cin >> num;
+        arr[last] = num;
+        last++;
+    }
+
+    else if(s == "pop") {
+        if(last - start == 0) cout << -1 << '\n';
+        else {
+            cout << arr[start] << '\n';
+            start++;
+        }
+    }
+
+    else if(s == "size"){
+        cout << last - start << '\n';
+    }
+
+    else if(s == "empty"){
+        if(last - start == 0) cout << 1 << '\n';
+        else cout << 0 << '\n';
+    }
+
+    else if(s == "front"){
+        if(last - start == 0) cout << -1 << '\n';
+        else cout << arr[start] << '\n';
+    }
+
+    else if(s == "back"){
+        if(last - start == 0) cout << -1 << '\n';
+        else cout << arr[last - 1] << '\n';
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int N;
+    cin >> N;
+    while(N--){
+        string s;
+        cin >> s;
+        switch_string(s);
+    }
+
+    delete[] arr;
+}
+```
+두 번째 스터디가 어느 새 첫 번째 스터디의 진도를 따라잡았다..  
+저번의 다짐대로 큐, 덱 단원은 STL 사용하지 않고 배열로 생 구현 했다.  
+위 문제는 큐를 구현한 것.  
+본인은 배열에서 start와 last라는 두 변수를 사용하여 구현하였다.
+
+
+[prob]: https://www.acmicpc.net/problem/18258
