@@ -7,6 +7,7 @@ tags: [ backtracking ]
 ---
 
 [문제보기][prob]
+
 ```c++
 #include <stdio.h>
 
