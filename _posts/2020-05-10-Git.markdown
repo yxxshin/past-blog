@@ -1,0 +1,72 @@
+---
+layout: post
+title: "Manual of Git"
+description: "Git의 기초 사용법"
+date:   2020-05-10 16:00:00 +0900
+categories: [ Others ]
+tags: [ manual ]
+---
+
+ 정교민 교수님의 Programming Methodology 수업을 수강하던 도중, 수업 시간에 git의 사용법에 대해 다루었다. 정리의 필요성을 느껴, 아래와 같이 정리하였다.
+
+[참고 자료][youtube]
+
+**`git init`** : 이 폴더가 git의 관리 하에 들어감.   
+`git config —global user.name “이름”` : 이름 설정  
+`git config —global user.email “메일”` : 이메일주소 설정  
+
+### **타임캡슐의 비유를 사용. 커밋하는 내용들을 타임캡슐로 생각. 타임캡슐에 넣고, 묻는다.**  
+
+**`git status`** : 이 파일들이 “만들어지거나, 수정되거나, 삭제된 사실” 들이 나타난다.
+- untracked files: 없었다가 새로 생긴 파일들  
+
+**`git add 파일이름`** : 그 이름의 파일을 타임캡슐에 넣는다. 
+- `git add -A` : status의 모든 사실들을 타임캡슐에 넣는다.
+
+**`git commit -m “메세지”`** : 타임캡슐을 묻는다. (커밋한다)  
+**`git log`** : 캡슐들의 정보와 메세지가 뜬다.
+
+
+### 이전의 캡슐로 되돌리기
+`git reset 캡슐번호`: 캡슐 이전의 상태로 돌아간다. 캡슐번호는 `git log` 의 앞 6글자로 하면 된다
+- `git reset ff18a —soft` : ff18a 시점으로 돌아가며, 이후에 한 모든 변경사항이 git commit을 하기 직전의 상태, 즉 타임캡슐에만 넣어진 상태가 됨.
+- `git reset ff18a —mixed` : ff18a 시점으로 돌아가며, 이후에 한 모든 변경사항이 `git add`을 하기 직전의 상태가 됨. 타임캡슐에도 들어가 있지 않음.
+- `git reset ff18a —hard` : ff18a 시점으로 돌아가며, 이후에 한 모든 변경사항이 아예 없어짐.
+- 생략할 경우, 기본으로는 mixed가 실행된다.
+
+`git revert 캡슐번호`: 취소할 캡슐 번호를 넣으면, 그 캡슐이 반전된 캡슐이 하나 더 생겨서 묻힘. 결과적으로 상쇄되지만, `git log` 에서 확인 가능함.
+
+### branch를 평행우주로 생각
+**`git branch 이름`**: 이름의 branch를 새로 생성한다. 기존의 상태를 모두 가져간다.
+- `git branch` 만 치면, branch 이름들을 확인 가능
+- `git branch -D` 이름 : 해당 이름의 branch를 삭제한다.
+- **`git checkout`** 이름: 이름의 branch로 이동한다. 
+
+### 새로 만든 branch를 기존 master에 합치자
+**`git merge 이름`**: 이름의 branch를 현재 branch에 합친다.
+- master에 합치고 싶으면 `git checkout master` 쳐서 master로 이동해준 후, merge로 합친다.
+- 다른 방법으로 수정된 두 branch를 합치는 경우 에러가 뜬다. 
+
+`git log —graph —all —decorate` : 시각화된 log을 확인할 수 있다. 
+
+[참고자료][git]  
+이해를 크게 돕는 사진들이 있으니 헷갈리면 들어가서 보자.
+
+
+### 용어설명
+**HEAD** : 현재 branch(에 담긴 커밋 중 가장 마지막 커밋)를 가리키는 포인터  
+**Index**: 바로 다음에 커밋할 것들. ( = Staging Area )  
+**Working Directory** : 작업 공간. 테스트 환경?
+
+### 저장 원리
+`Working Directory  —(git add)-> Index —(git commit)-> Git repository(HEAD)`  
+`git commit`은 Index(Staging Area)의 내용을 스냅샷으로 영구히 저장하도록 하고, 그 스냅샷을 가리키는 커밋 객체를 만든다. 그리고 master가 그 커밋 객체를 가리키도록 한다.  
+branch를 checkout 하면, HEAD가 새로운 branch를 가리키도록 바꾸고, 새로운 커밋의 스냅샷을 Index에 넣는다. 그리고 Index의 내용을 Working Directory로 복사한다. 
+
+### reset의 원리
+1. `reset —soft` 를 하면 HEAD를 이동시킨다. (마지막 단계의 git commit 만을 되돌림)
+2. `reset —mixed` 를 하면 이동된 HEAD가 가리키는 스냅샷으로 Index를 업데이트한다.
+3. `reset —hard` 를 하면 Working Directory까지 업데이트한다.
+
+[youtube]: youtube.com/watch?v=FXDjmsiv8fI
+[git]: https://git-scm.com/book/ko/v2/Git-도구-Reset-명확히-알고-가기
