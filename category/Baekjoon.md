@@ -1,6 +1,6 @@
 ---
 layout: category
-title: Baekjoon Solution
+title: Baekjoon Solutions
 category: Baekjoon
 permalink: '/category/baekjoon'
 ---

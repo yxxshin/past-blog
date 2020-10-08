@@ -1,6 +1,6 @@
 ---
 layout: category
-title: Algorithm Theory
+title: Algorithm Theories
 category: Algorithm
 permalink: '/category/algorithm'
 ---
