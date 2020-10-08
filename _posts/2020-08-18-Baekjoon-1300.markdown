@@ -1,0 +1,58 @@
+---
+layout: post
+title: "Baekjoon 1300 (K번째 수)"
+date:   2020-08-18 21:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ binaray_search ]
+---
+
+[문제보기][prob]
+
+```c++
+#include <cstdio>
+#include <iostream>
+#include <algorithm>
+
+using namespace std;
+
+long long int N;
+int k;
+
+int main() {
+    scanf("%d",&N);
+    scanf("%d",&k);
+
+    long long int count = 0;
+    long long int left = 1, right = N * N;
+    long long int middle, answer;
+
+    while(left <= right) {
+        count = 0;
+        middle = (left + right) / 2;
+
+        // count how many numbers are lower than middle
+        for(long long int i = 1; i <= N; i++){
+           count += min(N, middle/i);
+        }
+
+        if(count < k){
+           left = middle + 1;
+        }
+
+        else if(count >= k) {
+            // the answer should be the minimum value
+            answer = middle;
+            right = middle - 1;
+        }
+    }
+
+    printf("%lld\n",answer);
+```
+의외로 이분 탐색으로 풀 수 있는 문제 1번.
+
+B[k], 즉 k번째로 작은 숫자를 찾기 위해서는 어떠한 작은 숫자의 개수를 count하면 된다. (k개 이상이 되는 순간을 찾으면 된다)
+
+이 과정에서 이분 탐색을 사용하여 해결하였다.
+
+
+[prob]: https://www.acmicpc.net/problem/1300
