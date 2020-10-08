@@ -1,0 +1,67 @@
+---
+layout: post
+title: "Baekjoon 12015 (가장 긴 증가하는 부분 수열2)"
+date:   2020-08-18 23:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ binaray_search ]
+---
+
+[문제보기][prob]
+
+```c++
+#include <cstdio>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    // put inputs
+    int N;
+    scanf("%d",&N);
+
+    int* arr = new int[N];
+    for(int i = 0; i < N; i++){
+        scanf("%d",&arr[i]);
+    }
+
+    // use LIS vector
+    vector<int> LIS;
+    LIS.push_back(0);
+    int len = 0;
+
+    for(int i = 0; i < N; i++){
+        // if next arr number is bigger than the biggest value in LIS
+        if(arr[i] > LIS.back()){
+            // push back(update)
+            LIS.push_back(arr[i]);
+            len++;
+        }
+
+        // if not: switch this value in the alright place
+        else {
+            // find the lower bound and switch: Binaray Search
+            int left = 0, right = LIS.size(), middle;
+            while(left < right) {
+                middle = (left + right) / 2;
+                if(LIS[middle] < arr[i]) left = middle + 1;
+                else right = middle;
+            }
+            LIS[right] = arr[i];
+        }
+
+    }
+
+    printf("%d\n",len);
+}
+```
+
+의외로 이분 탐색으로 풀 수 있는 문제 2번.
+
+굉장히 알고리즘이 어려워, 스스로 생각하지는 못했다.  
+인터넷에 다양한 알고리즘들이 올라와 있었는데, 그 중 가장 와닿는 방법으로 문제를 해결하였다.
+
+새로운 LIS vector를 만들어, 조건에 따라 값을 vector의 적절한 위치에 넣는데,
+넣는 과정에서 이분 탐색을 사용하는 것이 매우 인상적이었다.
+
+[prob]: https://www.acmicpc.net/problem/12015
