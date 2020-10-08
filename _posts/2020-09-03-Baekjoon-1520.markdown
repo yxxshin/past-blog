@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Baekjoon 1520 (내리막 길)"
-date:   2020-09-01 21:30:00 +0900
+date:   2020-09-03 15:30:00 +0900
 categories: [ Baekjoon ]
 tags: [ dp ]
 ---
