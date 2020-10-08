@@ -15,7 +15,7 @@ use_math: true
 
 구하고자 하는 경우의 시간복잡도 T(n)이 다음과 같이 표현된다고 하자.
 
-$ T(n) \, = \, O(1) \qquad \qquad \qquad \quad if \; n \, = \, 1 $
+$ T(n) \, = \, O(1) \qquad \qquad \qquad \quad if \; n \, = \, 1 $  
 $ \qquad \; \, = \, a \, T(n/b) \, + \, f(n) \qquad otherwise $
 
 조건: $ a \, \geq \, 1, \, b \, \geq \, 1 $ , $f(n)$은 점근적으로 양수 함수값을 가지는 함수
