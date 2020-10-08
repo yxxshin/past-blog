@@ -1,0 +1,81 @@
+---
+layout: post
+title: "Baekjoon 6549 (히스토그램에서 가장 큰 직사각형)"
+date:   2020-08-04 15:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ stack ]
+---
+
+[문제보기][prob]
+
+```c++ 
+#include <iostream>
+#include <stdio.h>
+#include <stack>
+using namespace std;
+
+int n;
+long long int arr[100002];
+int main() {
+    while(true) {
+        scanf("%d",&n);
+        // ending program
+        if(n == 0) break;
+
+        // initialization
+        for(int i = 0; i < 100002; i++){
+            arr[i] = 0;
+        }
+
+        // input histogram
+        for(int i = 0; i < n; i++) {
+            scanf("%d",&arr[i]);
+        }
+
+        // solution using <stack>
+        stack<int> s;
+        long long int ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            // first step : fill the stack until the last one
+            while(!s.empty() && arr[s.top()] > arr[i]) {
+                long long int height = arr[s.top()];
+                s.pop();
+                int width = i;
+                if (!s.empty()) {
+                    width = (i - s.top() - 1);
+                }
+                if (ans < width*height) {
+                    ans = width*height;
+                }
+            }
+            s.push(i);
+        }
+        // second step : when first step finished but the stack is not empty
+        while(!s.empty()) {
+            long long int height = arr[s.top()];
+            s.pop();
+            long long int width = n;
+            if (!s.empty()) {
+                width = n-s.top()-1;
+            }
+            if (ans < width*height) {
+                ans = width*height;
+            }
+        }
+        printf("%lld\n",ans);
+    }
+}
+```
+
+직접 풀어보겠다고 하다가 제대로 고생한 문제.  
+시간 초과 2회, 메모리 초과 8회, 틀렸습니다 2회를 거치고 맞은 전설적인 문제다.   
+알고리즘이 시간복잡도를 넘어감을 깨닫고 갈아엎은것만 세 번..  
+분할정복을 사용하기 위해서는 최솟값을 O(N)이 아닌 O(logN)으로 찾는 알고리즘이 필요한데  
+아직 배우지 않아 포기하였다. (삽질했다는 뜻)  
+결국 스택을 이용하여 다시 풀었다.  
+스택을 이용하는 알고리즘은 [이 게시글][view]을 참고하였다.
+
+
+[prob]: https://www.acmicpc.net/problem/6549
+[view]: https://www.acmicpc.net/blog/view/12
