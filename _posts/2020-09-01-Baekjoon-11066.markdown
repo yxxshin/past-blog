@@ -1,0 +1,65 @@
+---
+layout: post
+title: "Baekjoon 11066 (파일 합치기)"
+date:   2020-09-01 19:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ dp ]
+use_math: true
+---
+
+[문제보기][prob]
+
+```c++
+#include <cstdio>
+#include <climits>
+#include <algorithm>
+
+using namespace std;
+
+int arr[501];
+int sum[501];  // sum[i] = arr[1] + ... + arr[i]
+int dp[501][501];   // dp[i][j] : min value for combining arr[i] to arr[j]
+
+int main() {
+    // Solution by Dynamic Programming
+    // K <= 500, so O(N^3) is okay (500^3 ~ 10^8)
+
+    int T, K;
+    scanf("%d",&T);
+    while(T--){
+        scanf("%d",&K);
+
+        for(int i = 1; i <= K; i++){
+            scanf("%d",&arr[i]);
+            sum[i] = sum[i-1] + arr[i];
+        }
+
+        // dp[i][i] = 0, dp[i][i+1] = 0  ( values added by sum )
+        // dp[i][j] = minimum of dp[i][k] + dp[k+1][j] + arr[i] + ... + arr[j]
+        //          = minimum of dp[i][k] + dp[k+1][j] + sum[j] - sum[i-1]
+
+        // get the value dp[i][i+d]
+        for(int d = 1; d < K; d++){
+            for(int i = 1; i+d <= K; i++){
+                dp[i][i+d] = INT_MAX;
+                for(int temp = i; temp < i + d; temp++){
+                    dp[i][i+d] = min(dp[i][i+d], dp[i][temp] + dp[temp+1][i+d] + sum[i+d] - sum[i-1]);
+                }
+            }
+        }
+
+        printf("%d\n", dp[1][K]);
+    }
+}
+```
+
+dp 배열을 알맞게 2차원 배열로 두고,
+조건에 맞게 새로 update, overwrite 하는 기본적인 동적계획법 문제였다.
+
+K가 500 까지였는데, **500이 굉장히 힌트가 되는 숫자**이다.  
+$500^3$ 이 약 $10^8$과 비슷하며, $10^8$ 개의 연산이 약 1초가 걸리는 것을 생각하자.
+
+$ N \leq 500 $ 의 힌트는, 시간복잡도가 $O(N^3)$ 까지 가능하다는 힌트를 준 것이다.  
+즉, 위의 방식의 동적계획법의 타당성을 어느 정도 얻는다.
+
+[prob]: https://www.acmicpc.net/problem/11066
