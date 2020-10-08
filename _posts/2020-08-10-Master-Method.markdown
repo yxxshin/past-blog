@@ -3,7 +3,7 @@ layout: post
 title: "The Master Method"
 description: "마스터 정리"
 date:   2020-08-10 16:00:00 +0900
-categories: [ Others ]
+categories: [ Algorithm ]
 tags: [ manual ]
 use_math: true
 ---
