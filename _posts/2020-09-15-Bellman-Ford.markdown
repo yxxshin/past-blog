@@ -46,4 +46,4 @@ Relax 단계는, 어떠한 정점에서 출발하여 모든 간선을 차례차�
 필자가 직접 구현한 코드는  
 [Baekjoon 11657 (타임머신)][my]을 참고하라.
 
-[my]:
+[my]: https://yxxshin.github.io/category/baekjoon/Baekjoon-11657/
