@@ -8,7 +8,7 @@ tags: [ binaray_search ]
 use_math: true
 ---
 
-## 이분 탐색 (Binaray Search)
+### 이분 탐색 (Binaray Search)
 이분 탐색은 이름 그대로 탐색 알고리즘의 종류이다.  
 포인트는, "필요 없는 부분은 쳐다보지 않아" 시간을 줄인다.
 
@@ -31,7 +31,7 @@ use_math: true
 
 단계가 총 $log_2(N)$ 개 이므로, O(logN)의 시간복잡도로 탐색이 가능하다.
 
-## 파라매트릭 서치 (Parametric Search)
+### 파라매트릭 서치 (Parametric Search)
 이분 탐색과 매우 유사한 **파라매트릭 서치 (Parametric Search)** 도 함께 알아보자.  
 이는 이분 탐색을 응용하여 최솟값이나 최댓값을 구하는 알고리즘이다.
 
