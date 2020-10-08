@@ -46,7 +46,7 @@ texture:
     rss: null
     instagram: yxxshin0209
     baekjoon: samshin3910
- 
+
 # Tipque Search
 tipque_search:
   include:
@@ -56,6 +56,13 @@ tipque_search:
     files: [search.html, index.html, tags.html, page.html]   # 검색 항목에서 제외
     categories: []
     tags: []
+
+# Math equation
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
 
 # If you want to link only specific pages in your header, uncomment
 # this and add the path to the pages in order as they should show up
