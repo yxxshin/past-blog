@@ -1,0 +1,114 @@
+---
+layout: post
+title: "Baekjoon 5430 (AC)"
+date:   2020-07-15 17:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ deque ]
+---
+
+[문제보기][prob]
+
+```c++
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    int T, n;
+    string p, input_array;
+    cin >> T;
+
+    while(T--){
+        //test case start
+        cin >> p;
+        cin >> n;
+        cin >> input_array;
+
+        int* arr = new int[400010];
+        int arr_count = 1;
+        int start = 0;
+        int last = n + 1;
+        bool is_error = false;
+        bool is_reverse = false;
+
+        // input array
+        int k = 1;
+        while(input_array[k] != '\0') {
+            int x = 0;
+            while(input_array[k] >= '0' && input_array[k] <= '9') {
+                x *= 10;
+                x += int(input_array[k] - '0');
+                k++;
+            }
+            if( x != 0 ){
+                arr[arr_count] = x;
+                arr_count++;
+            }
+            k++;
+        }
+
+        // do actions
+        for(int j = 0; j < p.length(); j++) {
+            if(p[j] == 'R'){
+                // check if it is reverse or not
+                is_reverse = !is_reverse;
+            }
+
+            else if(p[j] == 'D'){
+                // delete first number or last number
+                // if array is empty
+                if(last - start == 1) {
+                    is_error = true;
+                    break;
+                }
+                // if array is not empty:
+                else {
+                    if(is_reverse) last--;
+                    else if(!is_reverse) start++;
+                }
+            }
+        }
+
+        if(is_error) cout << "error" << '\n';
+        else {
+            cout << "[";
+            if(!is_reverse){
+                for(int i = start + 1; i < last - 1; i++)
+                    cout << arr[i] << ",";
+                if(last - start != 1) cout << arr[last-1];
+                cout << "]" << '\n';
+            }
+            else if(is_reverse){
+                for(int i = last - 1; i > start + 1; i--)
+                    cout << arr[i] << ",";
+                if(last - start != 1) cout << arr[start + 1];
+                cout << "]" << '\n';
+            }
+
+        }
+        is_error = false;
+        p = "";
+    }
+}
+```
+
+생각보다 예외 처리할 게 많았던.. 생각보다 더러웠던.. 문제였다  
+결국 7번의 런타임 에러를 해결하지 못하고 알고리즘을 갈아엎었다  
+어차피 기존의 알고리즘으로는 시간초과가 나기 때문 ㅠㅠ 
+
+### 두 가지 배운 점
+
+1. 뒤집는 행위를 O(n)이 아닌 O(1)로 해야 했다.  
+고로 뒤집는 행위를 그냥 하나의 boolean 값 변경으로 생각하고, 앞에서 빼는 행위를 boolean 값에 따라 앞/뒤에서 빼면 됐다.  
+즉, 이 문제가 Deque 형태의 문제였던 것.. 을 2시간 후에야 이해했다
+
+2. C++로 "[10,2,30,4]" 와 같은 형태의 input을 받고 인식하는 것은
+생각보다 굉장히 더러웠다.  
+직접적으로 comma를 구분하여 받는 getline 등을 이용하는 방법도 있지만
+굉장히 복잡하고 외울(써먹을) 자신도 없었다   
+<stdio.h> 의 scanf을 이용하여 좀 더 범용성 좋게 받을 수도 있었다  
+단, 이 경우에는 Enter가 buffer에 남아있는 등의 문제를 좀 손봐주어야 한단다  
+필자는 그냥 통째로 string으로 입력받고, 이후 한칸씩 뜯어가며 변환하는 방법을 택했다  
+이 경우에는, 두 자리 이상의 숫자를 따로 처리해 주어야 한다
+
+[prob]: https://www.acmicpc.net/problem/5430
