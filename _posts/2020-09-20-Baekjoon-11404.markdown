@@ -1,4 +1,12 @@
-c
+---
+layout: post
+title: "Baekjoon 11404 (플로이드)"
+date:   2020-09-20 15:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ asp ]
+---
+
+[문제보기][prob]
 
 ```c++
 #include <cstdio>
