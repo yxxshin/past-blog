@@ -1,0 +1,54 @@
+---
+layout: post
+title: "Baekjoon 1654 (랜선 자르기)"
+date:   2020-08-18 15:30:00 +0900
+categories: [ Baekjoon ]
+tags: [ binaray_search ]
+---
+
+[문제보기][prob]
+
+```c++
+#include <cstdio>
+#include <algorithm>
+using namespace std;
+
+int K, N;
+
+int main() {
+    // get inputs
+    scanf("%d %d", &K, &N);
+    long long int* arr = new long long int[K];
+    for(int i = 0; i < K; i++){
+        scanf("%lld",&arr[i]);
+    }
+
+    // sort input array
+    sort(arr, arr+K);
+
+    // Binaray Search
+    long long int left, right, middle, answer = 0;
+    left = 1, right = arr[K-1];
+
+    while(left <= right) {
+        long long int count = 0;
+        middle = (left + right) / 2;
+        for(int i = 0; i < K; i++){
+            count += (arr[i]/middle);
+        }
+
+        if(count < N) right = middle - 1;
+        else if(count >= N) {
+            if(middle > answer) answer = middle;
+            left = middle + 1;
+        }
+    }
+
+    printf("%lld\n", answer);
+    delete[] arr;
+}
+```
+
+이분 탐색을 응용하는 파라매트릭 서치(Parametric Search)의 가장 기본적인 문제!
+
+[prob]: https://www.acmicpc.net/problem/1654
