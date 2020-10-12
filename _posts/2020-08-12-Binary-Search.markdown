@@ -1,14 +1,14 @@
 ---
 layout: post
-title: "Binaray Search, Paramametric Search"
-description: "이분탐색 (Binaray Search)과 파라매트릭 서치(Parametric Search)"
+title: "Binary Search, Paramametric Search"
+description: "이분탐색 (Binary Search)과 파라매트릭 서치(Parametric Search)"
 date:   2020-08-12 16:00:00 +0900
 categories: [ Algorithm ]
-tags: [ binaray_search ]
+tags: [ binary_search ]
 use_math: true
 ---
 
-### 이분 탐색 (Binaray Search)
+### 이분 탐색 (Binary Search)
 이분 탐색은 이름 그대로 탐색 알고리즘의 종류이다.  
 포인트는, "필요 없는 부분은 쳐다보지 않아" 시간을 줄인다.
 

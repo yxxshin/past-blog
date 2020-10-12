@@ -3,7 +3,7 @@ layout: post
 title: "Baekjoon 1300 (K번째 수)"
 date:   2020-08-18 21:30:00 +0900
 categories: [ Baekjoon ]
-tags: [ binaray_search ]
+tags: [ binary_search ]
 ---
 
 [문제보기][prob]

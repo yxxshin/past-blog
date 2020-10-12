@@ -3,7 +3,7 @@ layout: post
 title: "Baekjoon 2110 (공유기 설치)"
 date:   2020-08-18 18:30:00 +0900
 categories: [ Baekjoon ]
-tags: [ binaray_search ]
+tags: [ binary_search ]
 ---
 
 [문제보기][prob]
@@ -25,7 +25,7 @@ int main() {
     // sort input array
     sort(arr, arr+N);
 
-    // Binaray Search
+    // Binary Search
     long long int left, right, middle, answer = 0;
     int temp, next, count;
     left = 1, right = arr[N-1] - arr[0];

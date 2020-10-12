@@ -3,7 +3,7 @@ layout: post
 title: "Baekjoon 1920 (수 찾기)"
 date:   2020-08-15 15:30:00 +0900
 categories: [ Baekjoon ]
-tags: [ binaray_search ]
+tags: [ binary_search ]
 ---
 
 [문제보기][prob]
@@ -15,7 +15,7 @@ using namespace std;
 
 int N, M;
 
-void Binaray_Search(int* arr, int target) {
+void Binary_Search(int* arr, int target) {
     // arr should be sorted
     int left = 0, right = N - 1;
     while(left <= right) {
@@ -56,9 +56,9 @@ int main() {
     // sort array
     sort(arr, arr+N);
  
-    // Binaray Search
+    // Binary Search
     for(int i = 0; i < M; i++){
-        Binaray_Search(arr, brr[i]);
+        Binary_Search(arr, brr[i]);
     }
 
     delete[] arr;

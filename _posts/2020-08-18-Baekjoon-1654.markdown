@@ -3,7 +3,7 @@ layout: post
 title: "Baekjoon 1654 (랜선 자르기)"
 date:   2020-08-18 15:30:00 +0900
 categories: [ Baekjoon ]
-tags: [ binaray_search ]
+tags: [ binary_search ]
 ---
 
 [문제보기][prob]
@@ -26,7 +26,7 @@ int main() {
     // sort input array
     sort(arr, arr+K);
 
-    // Binaray Search
+    // Binary Search
     long long int left, right, middle, answer = 0;
     left = 1, right = arr[K-1];
 

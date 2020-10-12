@@ -3,7 +3,7 @@ layout: post
 title: "Baekjoon 12015 (가장 긴 증가하는 부분 수열2)"
 date:   2020-08-18 23:30:00 +0900
 categories: [ Baekjoon ]
-tags: [ binaray_search ]
+tags: [ binary_search ]
 ---
 
 [문제보기][prob]
@@ -40,7 +40,7 @@ int main() {
 
         // if not: switch this value in the alright place
         else {
-            // find the lower bound and switch: Binaray Search
+            // find the lower bound and switch: Binary Search
             int left = 0, right = LIS.size(), middle;
             while(left < right) {
                 middle = (left + right) / 2;
