@@ -14,9 +14,10 @@ tags: [ server ]
 
 <br>
 
+------
 ### 1. Overview
 
-> ### Server란?  
+> ### <u>Server란?</u>  
 
 네트워크를 통해 Client가 요구하는 **"서비스 자원의 제공자"**  
 실제로, 이번 세미나를 통해  
@@ -30,14 +31,15 @@ tags: [ server ]
 
 <br>
 
+---
 ### 2. JavaScript
-> ### JavaScript의 특징
+> ### <u>JavaScript의 특징</u>
 - 스크립트 언어 ( = 인터프리터 언어)
 - **코드를 한 줄씩 번역하고 실행**
 - **타입을 명시하지 않음**
 - 프로토타입(prototype) 기반의 객체 지향 언어
 
-> ### 변수 선언
+> ### <u>변수 선언</u>
 
 | | <span style="color:blue">**var**</span> | <span style="color:blue">**let**</span> | <span style="color:blue">**const**</span> |
 |:---:|:---:|:---:|:---:|
@@ -47,14 +49,14 @@ tags: [ server ]
 초기화 값 필요|X||O
 
 
-> ### Hoisting
+> ### <u>Hoisting</u>
 JavaScript는 var 변수와 함수를 아래에서 선언 & 초기화 해도, 선언 부분만 최상단으로 끌어올려 해석한다.  
 코드의 가독성과 유지보수를 위해 Hoisting이 일어나지 않도록 하는 것이 좋다.  
 간단한 해결 방법  
 1. let과 const를 사용한다. (사실상 const만 사용하라는 정우형의 말이 있었다 ㅎㅎ)
 2. 함수, 변수를 가급적 코드 상단부에서 선언한다.
 
-> ### Data Type (Primitive)
+> ### <u>Data Type (Primitive)</u>
 - **Number**  
 모든 숫자 타입은 이거다! 64비트 실수형
 - **String**  
@@ -72,7 +74,7 @@ true / false
 - **Symbol**  
 유일한 식별자를 만들고 싶을 때 사용
 
-> ### Object (객체)
+> ### <u>Object (객체)</u>
 Property와 Method의 집합으로, { } 태그로 감싸져 있다.  
 위의 primitive 타입을 제외한 나머지는 모두 object 타입이다.  
 다음과 같은 틀을 따른다
@@ -97,11 +99,11 @@ const animal = {
 }
 ```
 
-> ### Array
+> ### <u>Array</u>
 JavaScript 에서는 Array도 객체이며, 다양한 data type이 함께 들어갈 수 있다.  
 [ ] 키워드로 감싸 표현한다.
 
-> ### JSON (JavaScript Object Notation)
+> ### <u>JSON (JavaScript Object Notation)</u>
 객체 표현식으로, key: value의 쌍(pair)으로 이루어진다.  
 데이터는 쉼표(,)로 나열, 배열은 대괄호([ ])로 표현, 객체는 중괄호({ })로 표현  
 `객체이름.key` 나 `객체이름['key']` 와 같이 접근 가능하다.  
@@ -115,7 +117,7 @@ ex.
 }
 ```
 
-> ### Function
+> ### <u>Function</u>
 - 함수 선언식: Hoisting 영향을 받는다!
 ```javascript
 function add(x, y) {
@@ -139,7 +141,7 @@ function logic이 한 줄인 경우 return 생략 가능하고,
 
 ---
 
-### 자바스크립트의 함수는 **일급객체** 이다.
+### <u>자바스크립트의 함수는 **일급객체** 이다.</u>
 - <u>변수</u> or <u>데이터 구조</u>에 담을 수 있고,  
 - 다른 함수의 <u>파라미터</u>로 전달할 수 있고, 
 - <u>반환값</u>으로 사용할 수 있다.
