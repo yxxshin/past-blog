@@ -41,7 +41,7 @@ tags: [ server ]
 
 | | <span style="color:blue">**var**</span> | <span style="color:blue">**let**</span> | <span style="color:blue">**const**</span> |
 |:---:|:---:|:---:|:---:|
-|범위|Function Scope|Block Scope|Block Scope|
+|범위|&nbsp;&nbsp;Function Scope&nbsp;&nbsp;|&nbsp;&nbsp;Block Scope&nbsp;&nbsp;|&nbsp;&nbsp;Block Scope&nbsp;&nbsp;|
 변수 재선언|O|X|X|
 변수 값 재할당|O|O|X|
 초기화 값 필요|X||O
