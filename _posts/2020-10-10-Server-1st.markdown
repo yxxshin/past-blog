@@ -7,13 +7,141 @@ categories: [ Others ]
 tags: [ server ]
 ---
 
-### 1주차 세미나 사전준비
+### 0. 1주차 세미나 사전준비
 1. NodeJS 설치
 2. VSCode 설치 (+ Extensions)
 3. GIT 가입
 
+<br>
+
 ### 1. Overview
 
-> Server란?  
+> ### Server란?  
 
-네트워크를 통해 Client가 요구하는 **"서비스 자원의 제공자"**
+네트워크를 통해 Client가 요구하는 **"서비스 자원의 제공자"**  
+실제로, 이번 세미나를 통해  
+
+1. 비즈니스 로직 설계
+2. 데이터베이스 설계
+3. HTTP와 HTTPS
+4. AWS 배포  
+
+를 배워 본다!
+
+<br>
+
+### 2. JavaScript
+> ### JavaScript의 특징
+- 스크립트 언어 ( = 인터프리터 언어)
+- **코드를 한 줄씩 번역하고 실행**
+- **타입을 명시하지 않음**
+- 프로토타입(prototype) 기반의 객체 지향 언어
+
+> ### 변수 선언
+| | <span style="color:blue">**var**</span> | <span style="color:blue">**let**</span> | <span style="color:blue">**const**</span> |
+|:---:|:---:|:---:|:---:|
+|범위|Function Scope|Block Scope|Block Scope|
+변수 재선언|O|X|X|
+변수 값 재할당|O|O|X|
+초기화 값 필요|X||O
+
+> ### Hoisting
+JavaScript는 var 변수와 함수를 아래에서 선언 & 초기화 해도, 선언 부분만 최상단으로 끌어올려 해석한다.  
+코드의 가독성과 유지보수를 위해 Hoisting이 일어나지 않도록 하는 것이 좋다.  
+간단한 해결 방법  
+1. let과 const를 사용한다. (사실상 const만 사용하라는 정우형의 말이 있었다 ㅎㅁㅎ)
+2. 함수, 변수를 가급적 코드 상단부에서 선언한다.
+
+> ### Data Type (Primitive)
+- **Number**  
+모든 숫자 타입은 이거다! 64비트 실수형
+- **String**  
+문자열 자료형  
+' 와 " 동일하게 취급한다.  
+참고) ES6부터 역따옴표(백틱)를 지원한다.  
+ex. `(백틱) 이렇게 ${변수1} 섞어서 ${변수2} 써도 된다 (백틱)` 
+- **Boolean**  
+true / false
+- **Null**  
+존재하지 않는 값, 비어 있는 값  
+다른 언어의 'null pointer'와 좀 다르다
+- **Undefined**  
+값이 할당되지 않은 상태 (변수는 선언했지만)  
+- **Symbol**  
+유일한 식별자를 만들고 싶을 때 사용
+
+> ### Object (객체)
+Property와 Method의 집합으로, { } 태그로 감싸져 있다.  
+위의 primitive 타입을 제외한 나머지는 모두 object 타입이다.  
+다음과 같은 틀을 따른다
+```
+자료형 객체이름 = {
+    key: value,
+    key: value,
+    method: function() {
+        // function
+    }
+};
+```
+실제 예시:
+```javascript
+const animal = {
+    animalType: "cat",
+    animalName: "Nayo",
+    animalFriends: ['Munji', 'Blue'],
+    meow: function(){
+        console.log( `${this.animalName}: 야옹`);
+    },
+}
+```
+
+> ### Array
+JavaScript 에서는 Array도 객체이며, 다양한 data type이 함께 들어갈 수 있다.  
+[ ] 키워드로 감싸 표현한다.
+
+> ### JSON (JavaScript Object Notation)
+객체 표현식으로, key: value의 쌍(pair)으로 이루어진다.  
+데이터는 쉼표(,)로 나열, 배열은 대괄호([ ])로 표현, 객체는 중괄호({ })로 표현  
+`객체이름.key 나 객체이름['key']` 와 같이 접근 가능하다.  
+클라와 통신할 때 주로 이용한다.   
+ex.
+```javascript
+{
+    "name": "신연상",
+    "age": 21,
+    "friends": ["송유민", "이주영", "차수영", "최호승", "한동민"]
+}
+```
+
+> ### Function
+- 함수 선언식
+```javascript
+function add(x, y) {
+    return x + y;
+}
+```
+Hoisting 영향을 받는다!
+
+- 함수 표현식
+```javascript
+var add = function(x, y) {
+    return x + y;
+}
+```
+Hoisting 영향을 받지 않는다!
+
+- **화살표 함수**
+```javascript
+var add = (x, y) => x + y;
+var square = x => x * x;
+var person = (name, age) => ({ name: name, age: age});
+```
+function logic이 한 줄인 경우 return 생략 가능하고,  
+매개변수가 하나라면 ( ) 생략 가능
+
+---
+
+### 자바스크립트의 함수는 **일급객체** 이다.
+- *변수* or *데이터 구조*에 담을 수 있고,  
+- 다른 함수의 *파라미터*로 전달할 수 있고, 
+- *반환값*으로 사용할 수 있다.
