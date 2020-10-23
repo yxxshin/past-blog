@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "[ON SOPT] Server 1st Seminar"
-description: 무얼 배웠나요?
+description: JavaScript의 기본적인 문법
 date:   2020-10-10 20:00:00 +0900
 categories: [ Others ]
 tags: [ server ]
@@ -38,6 +38,7 @@ tags: [ server ]
 - 프로토타입(prototype) 기반의 객체 지향 언어
 
 > ### 변수 선언
+
 | | <span style="color:blue">**var**</span> | <span style="color:blue">**let**</span> | <span style="color:blue">**const**</span> |
 |:---:|:---:|:---:|:---:|
 |범위|Function Scope|Block Scope|Block Scope|
@@ -45,11 +46,12 @@ tags: [ server ]
 변수 값 재할당|O|O|X|
 초기화 값 필요|X||O
 
+
 > ### Hoisting
 JavaScript는 var 변수와 함수를 아래에서 선언 & 초기화 해도, 선언 부분만 최상단으로 끌어올려 해석한다.  
 코드의 가독성과 유지보수를 위해 Hoisting이 일어나지 않도록 하는 것이 좋다.  
 간단한 해결 방법  
-1. let과 const를 사용한다. (사실상 const만 사용하라는 정우형의 말이 있었다 ㅎㅁㅎ)
+1. let과 const를 사용한다. (사실상 const만 사용하라는 정우형의 말이 있었다 ㅎㅎ)
 2. 함수, 변수를 가급적 코드 상단부에서 선언한다.
 
 > ### Data Type (Primitive)
@@ -102,7 +104,7 @@ JavaScript 에서는 Array도 객체이며, 다양한 data type이 함께 들어
 > ### JSON (JavaScript Object Notation)
 객체 표현식으로, key: value의 쌍(pair)으로 이루어진다.  
 데이터는 쉼표(,)로 나열, 배열은 대괄호([ ])로 표현, 객체는 중괄호({ })로 표현  
-`객체이름.key 나 객체이름['key']` 와 같이 접근 가능하다.  
+`객체이름.key` 나 `객체이름['key']` 와 같이 접근 가능하다.  
 클라와 통신할 때 주로 이용한다.   
 ex.
 ```javascript
@@ -142,6 +144,6 @@ function logic이 한 줄인 경우 return 생략 가능하고,
 ---
 
 ### 자바스크립트의 함수는 **일급객체** 이다.
-- *변수* or *데이터 구조*에 담을 수 있고,  
-- 다른 함수의 *파라미터*로 전달할 수 있고, 
-- *반환값*으로 사용할 수 있다.
+- <u>변수</u> or <u>데이터 구조</u>에 담을 수 있고,  
+- 다른 함수의 <u>파라미터</u>로 전달할 수 있고, 
+- <u>반환값</u>으로 사용할 수 있다.
