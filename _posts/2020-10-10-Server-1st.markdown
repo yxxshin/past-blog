@@ -116,22 +116,18 @@ ex.
 ```
 
 > ### Function
-- 함수 선언식
+- 함수 선언식: Hoisting 영향을 받는다!
 ```javascript
 function add(x, y) {
     return x + y;
 }
 ```
-Hoisting 영향을 받는다!
-
-- 함수 표현식
+- 함수 표현식: Hoisting 영향을 받지 않는다!
 ```javascript
 var add = function(x, y) {
     return x + y;
 }
 ```
-Hoisting 영향을 받지 않는다!
-
 - **화살표 함수**
 ```javascript
 var add = (x, y) => x + y;
