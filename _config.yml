@@ -18,7 +18,7 @@ texture:
   date_format: "%b %-d, %Y"
   style: black
   showNav: true
-  showPicker: true
+  showPicker: false
   # If you want to open Comments, uncomment this
   # disqus_shortname: yxxshin-study
 
