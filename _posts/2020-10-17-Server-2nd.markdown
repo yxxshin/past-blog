@@ -1,0 +1,230 @@
+---
+layout: post
+title:  "[ON SOPT] Server 2nd Seminar"
+description: NodeJS, 비동기 흐름제어, Module
+date:   2020-10-17 20:00:00 +0900
+categories: [ Others ]
+tags: [ server ]
+---
+
+### 1. NodeJS
+> ### <u>NodeJS란?</u>
+
+NodeJS는 <u>서버도 아니고, 프레임워크도 아니고, 프로그래밍 언어도 아니다</u>  
+프로그래밍 언어로 JavaScript를 사용하고,  
+Web Browser가 JavaScript를 해석한다.  
+NodeJS는 크롬 V8 엔진으로 빌드된 **JavaScript**를 실행할 수 있는 **런타임 환경**이다.
+
+
+> ### <u>NodeJS의 특징</u>
+1. **<span style="color:blue">Non-blocking I/O</span>**  
+![Non-blocking](https://imgur.com/gTiLOvh.jpg)  
+- Blocking  
+호출된 함수가 자신의 작업이 끝날 때까지 **제어권**을 가짐.  
+호출한 함수는 대기하며, 그 동안 프로그램 처리 진행 X
+- Non-Blocking  
+호출한 함수가 바로 다음 호출한 함수에게 **제어권**을 줌.  
+다음 작업 바로 수행할 수 있음.  
+<br>
+결과론적으로 다음과 같이 작업이 이루어진다.
+![easy](https://imgur.com/RZi1KUJ.jpg)
+
+2. **<span style="color:blue">Single Thread</span>**
+- **프로세스**  
+운영 체제에서 할당하는 작업의 단위  
+프로세스 간 자원(메모리) 공유 X
+- **쓰레드**  
+프로세스 내에서 실행되는 흐름의 단위  
+쓰레드들은 부모 프로세스의 자원 공유 가능!
+![Thread](https://imgur.com/xKdGwDn.jpg)
+<br>
+Node 실행 → 프로세스 한 개 생성 → 쓰레드 여러 개 생성  
+그러나 NodeJS는 Single Thread이기 때문에 **제어 가능한 쓰레드는 한 개**  
+<br>
+Q. Single Thread보다 Multi Thread가 더 좋지 않나요?  
+A. 쓰레드를 카페의 바리스타로 비유한 다음 예시로 확인하자.  
+![Barista](https://imgur.com/eYbhX2y.jpg)
+
+3. **<span style="color:blue">Event Driven</span>**   
+이벤트가 발생할 때 미리 지정해 놓은 작업을 수행  
+Node는 이벤트 리스너(Event Listener)에 콜백 함수를 지정해서 동작한다. <center><img src="https://imgur.com/ljqZiB9.jpg" width="250"></center>
+(부가적인 설명)  
+JavaScript 엔진은 **Memory Heap, CallStack** 의 두 가지 주요 구성 요소로 이루어졌다. 
+- **Memory Heap (메모리 힙)**  
+변수와 객체에 대한 모든 메모리 할당이 여기서 발생.
+- **CallStack (호출 스택)**  
+코드가 실행되면 호출 스택이 쌓인다.  
+프로그램에서 우리가 어딨는지를 기록하는 데이터 구조!<center><img src="https://imgur.com/mATyqGw.jpg" width="230"></center><center><img src="https://imgur.com/Lk2niZG.jpg" width="230"></center>
+- CallStack의 사이즈를 초과한다면 **Stack Overflow**가 발생한다. (무한루프 등등)
+- JavaScript는 Single Thread이므로, 호출 스택이 하나다. (즉, 한 번에 하나의 일만 처리할 수 있음)  
+→ 하나의 함수가 엄청 느리면?? **비동기 콜백(Asynchronous CallBack)**을 이용!!  
+<br>
+- **Asynchronous CallBack (비동기 콜백)**
+![콜백](https://imgur.com/MZSswLC.jpg)
+    - **콜백 큐(Callback Queue)**  
+    이벤트가 발생하면 백그라운드에서 콜백으로 콜백 함수들을 보냄  
+    이벤트루프가 콜스택에 콜백 함수들을 전달  
+    콜백 큐의 콜백 함수들은 콜 스택이 비워지기를 기다림
+    - **이벤트 루프(Event Loop)**  
+    콜백 큐의 콜백함수들을 콜 스택에 전달  
+    단, <u>콜 스택이 비어있을 때만</u> 전달
+    - **백그라운드(BackGround)**  
+    타이머나 이벤트 리스너들이 대기하는 곳  
+    여러 작업 동시에 실행 가능
+
+### 2. 비동기 흐름 제어
+> ### Blocking ↔ Non-Blocking, Sync ↔ Async 구분하기  
+- **Blocking ↔ Non-Blocking : 호출되는 함수가 바로 리턴하느냐 마느냐**  
+Blocking: 바로 리턴 X  
+Non-Blocking: 바로 리턴
+- **Sync ↔ Async : 호출되는 함수의 작업 완료 여부를 누가 신경쓰느냐**  
+Sync: 호출하는 함수가 (계속 확인하며) 신경 씀  
+Async: 호출되는 함수가 신경 씀
+
+JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.  
+하지만 Node는 대부분 **비동기적(Asynchronous)** 으로 작동한다.  
+그럼, 다음의 문제 상황에 직면한다.  
+<br>
+> ### JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?
+1. **<span style="color:blue">Callback Function</span>**  
+콜백함수란? 1. 다른 함수의 인자로써 이용되는 함수 2. 어떤 이벤트에 의해 호출되어지는 함수  
+예시)  
+```javascript
+fun = function(a, b, callback_func){
+    callback_func(a+b, a-b);
+}
+
+fun(5, 10, function(res1, res2) {
+    console.log(res1);
+    console.log(res2);
+});
+```
+쉽게 말해, <u>이벤트가 끝나면 다시 전화를 준다!</u>  
+이걸 이용해서 어떻게 비동기 처리를 해결할 수 있을까?  
+다음의 예시를 살펴보자.  
+```javascript
+function getData() {
+	var tableData;
+	$.get('https://domain.com/products/1', function(response) {
+		tableData = response;
+	});
+	return tableData;
+}
+
+console.log(getData()); // undefined
+```
+예상한 대로라면, response를 받고 tableData에 넣고, tableData가 출력되어야 하지만 undefined가 출력된다.  
+그 이유는, get이 비동기 방식으로 작동하여 tableData에 response를 넣기 전에 `return tableData;`를 실행했기 때문이다.  
+다음과 같이 콜백함수를 사용하면, 이를 해결할 수 있다.  
+```javascript
+function getData(callbackFunc) {
+	$.get('https://domain.com/products/1', function(response) {
+		callbackFunc(response); // 서버에서 받은 데이터 response를 callbackFunc() 함수에 넘겨줌
+	});
+}
+
+getData(function(tableData) {
+	console.log(tableData); // $.get()의 response 값이 tableData에 전달됨
+});
+```
+이러면, 데이터가 들어와야만 콜백 함수로 넘어가기 때문에, 데이터가 올바르게 출력된다.  
+`setTimeout`은 다음 예시와 같이 콜백함수로 처리 가능하다.  
+```javascript
+function first(callback){
+    setTimeout(function() {
+        console.log(1);
+        callback();
+    }, 500);
+}
+function second() {
+    console.log(2);
+}
+
+first(function() {
+    second();
+});
+```
+이러한 경우에는, 5초 뒤에 1 나오고 그 뒤에 2 나온다.  
+이와 같이 콜백함수를 이용하는 경우에는, **Callback Hell**에 빠질 수 있다는 문제가 있다.  
+(콜백함수가 서로 물리고 물려, 가독성 떨어지고 로직 바꾸기도 어렵다)  
+따라서, 아래의 방법들을 주로 이용한다.
+
+2. **<span style="color:blue">Promise</span>**  
+Promise는 다음의 3가지 상태를 가진다.
+- <u>Pending</u> : 최초로 생성, 비동기 작업 수행중..
+- <u>Fullfilled</u> : 비동기 작업이 성공적으로 완료됨
+- <u>Rejected</u> : 비동기 작업이 실패함  
+![promise](https://imgur.com/F8ZQVJU.jpg)
+기본적으로 promise는 다음의 형태를 띈다.
+    ```javascript
+    const func = new Promise(function (resolve, reject) {
+        // 내용
+    });
+    ```
+    - 비동기 작업을 성공하면, resolve를 호출한다. (Fullfilled 상태가 됨)  
+    이 경우, `then()`을 통해 결과를 전달한다.  
+    - 비동기 작업이 실패하면, reject를 호출한다. (Rejected 상태가 됨)  
+    이 경우, `catch()`를 통해 (보통은 error가) 전달한다.  
+
+    예시)
+    ```javascript
+    const func = new Promise(function (resolve, reject) {
+        const age = 19;
+        if(age > 20) {
+            resolve(age);
+        } else {
+            reject(new Error('나이가 너무 어려요'));
+        }
+    });
+
+    func
+        .then(function(resolvedData) {
+            console.log(resolvedData);
+        })
+        .catch(function(err) {
+            console.log(err);
+        });
+    ```
+    cf) 여러 개의 promise를 `.then()`을 연달아 사용할 수 있다 (Promise Chaining)  
+
+3. **<span style="color:blue">Async</span>**  
+함수 앞에 `async` 키워드를 붙혀주면, **암묵적으로 promise를 반환** 한다.  
+예시) 다음의 두 함수는 정확히 같은 역할을 한다.  
+    ```javascript
+    function getData() {
+        return new Promise((resolve, reject) => {
+            const data = 'data';    // 오래 걸림
+            resolve(data)
+        })
+    }
+
+    const data = getData();
+    data.then( (value) => {
+        console.log(value);
+    });
+    ```
+    ```javascript
+    async function getData() {
+        const data = 'data';    // 오래 걸림
+        return data;
+    }
+    const data = getData();
+    data.then( (value) => {
+        console.log(value);
+    });
+    ```
+    `await`은 **promise를 기다리며** (성공 or 실패), async로 정의된 함수 앞에만 사용 가능하다.  
+    예시)
+    ```javascript
+    async function getData() {
+        const data = 'data';    // 오래 걸림
+        return data;
+    }
+
+    async function main() {
+        const data = await getData();
+        console.log(data);
+    }
+
+    main();
+    ```
