@@ -87,7 +87,8 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
 > ### JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?
 1. **<span style="color:blue">Callback Function</span>**  
 콜백함수란? 1. 다른 함수의 인자로써 이용되는 함수 2. 어떤 이벤트에 의해 호출되어지는 함수  
-예시)  
+예시) 
+
     ```javascript
     fun = function(a, b, callback_func){
         callback_func(a+b, a-b);
