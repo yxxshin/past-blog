@@ -62,7 +62,15 @@ ex: 아래의 Imgur 사이트의 경우,
 [필자의 Imgur 사이트][Imgur]  
 URL을 만들었다면, 다음과 같은 방식으로 사진을 넣어줄 수 있습니다.
 ```
-[사진별명](URL.jpg)
+![사진별명](URL.jpg)
+```
+중앙 정렬, 크기 조정 등을 하려면 HTML 문법으로 처리해 주어야 합니다.
+```html
+<img src="URL.jpg" width="가로길이" height="세로길이">
+```
+만약 중앙정렬을 해주고 싶다면, 앞 뒤로 `<center>`와 `</center>`를 붙여주면 됩니다.
+```html
+<center><img src="URL.jpg" width="가로길이" height="세로길이"></center>
 ```
 
 ### 표 넣기
