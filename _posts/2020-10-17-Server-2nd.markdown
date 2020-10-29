@@ -35,8 +35,7 @@ NodeJS는 크롬 V8 엔진으로 빌드된 **JavaScript**를 실행할 수 있�
 프로세스 간 자원(메모리) 공유 X
 - **쓰레드**  
 프로세스 내에서 실행되는 흐름의 단위  
-쓰레드들은 부모 프로세스의 자원 공유 가능!
-![Thread](https://imgur.com/xKdGwDn.jpg)
+쓰레드들은 부모 프로세스의 자원 공유 가능! <center><img src="https://imgur.com/xKdGwDn.jpg" width="400"></center>
 <br>
 Node 실행 → 프로세스 한 개 생성 → 쓰레드 여러 개 생성  
 그러나 NodeJS는 Single Thread이기 때문에 **제어 가능한 쓰레드는 한 개**  
@@ -47,14 +46,14 @@ A. 쓰레드를 카페의 바리스타로 비유한 다음 예시로 확인하�
 
 3. **<span style="color:blue">Event Driven</span>**   
 이벤트가 발생할 때 미리 지정해 놓은 작업을 수행  
-Node는 이벤트 리스너(Event Listener)에 콜백 함수를 지정해서 동작한다. <center><img src="https://imgur.com/ljqZiB9.jpg" width="250"></center>
+Node는 이벤트 리스너(Event Listener)에 콜백 함수를 지정해서 동작한다. <center><img src="https://imgur.com/ljqZiB9.jpg" width="400"></center>
 (부가적인 설명)  
 JavaScript 엔진은 **Memory Heap, CallStack** 의 두 가지 주요 구성 요소로 이루어졌다. 
 - **Memory Heap (메모리 힙)**  
 변수와 객체에 대한 모든 메모리 할당이 여기서 발생.
 - **CallStack (호출 스택)**  
 코드가 실행되면 호출 스택이 쌓인다.  
-프로그램에서 우리가 어딨는지를 기록하는 데이터 구조!<center><img src="https://imgur.com/mATyqGw.jpg" width="230"></center><center><img src="https://imgur.com/Lk2niZG.jpg" width="230"></center>
+프로그램에서 우리가 어딨는지를 기록하는 데이터 구조!<center><img src="https://imgur.com/mATyqGw.jpg" width="380"></center><center><img src="https://imgur.com/Lk2niZG.jpg" width="400"></center>
 - CallStack의 사이즈를 초과한다면 **Stack Overflow**가 발생한다. (무한루프 등등)
 - JavaScript는 Single Thread이므로, 호출 스택이 하나다. (즉, 한 번에 하나의 일만 처리할 수 있음)  
 → 하나의 함수가 엄청 느리면?? **비동기 콜백(Asynchronous CallBack)**을 이용!!  
@@ -84,70 +83,72 @@ Async: 호출되는 함수가 신경 씀
 JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.  
 하지만 Node는 대부분 **비동기적(Asynchronous)** 으로 작동한다.  
 그럼, 다음의 문제 상황에 직면한다.  
-<br>
+
 > ### JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?
 1. **<span style="color:blue">Callback Function</span>**  
 콜백함수란? 1. 다른 함수의 인자로써 이용되는 함수 2. 어떤 이벤트에 의해 호출되어지는 함수  
 예시)  
-```javascript
-fun = function(a, b, callback_func){
-    callback_func(a+b, a-b);
-}
+    ```javascript
+    fun = function(a, b, callback_func){
+        callback_func(a+b, a-b);
+    }
 
-fun(5, 10, function(res1, res2) {
-    console.log(res1);
-    console.log(res2);
-});
-```
-쉽게 말해, <u>이벤트가 끝나면 다시 전화를 준다!</u>  
-이걸 이용해서 어떻게 비동기 처리를 해결할 수 있을까?  
-다음의 예시를 살펴보자.  
-```javascript
-function getData() {
-	var tableData;
-	$.get('https://domain.com/products/1', function(response) {
-		tableData = response;
-	});
-	return tableData;
-}
+    fun(5, 10, function(res1, res2) {
+        console.log(res1);
+        console.log(res2);
+    });
+    ```
 
-console.log(getData()); // undefined
-```
-예상한 대로라면, response를 받고 tableData에 넣고, tableData가 출력되어야 하지만 undefined가 출력된다.  
-그 이유는, get이 비동기 방식으로 작동하여 tableData에 response를 넣기 전에 `return tableData;`를 실행했기 때문이다.  
-다음과 같이 콜백함수를 사용하면, 이를 해결할 수 있다.  
-```javascript
-function getData(callbackFunc) {
-	$.get('https://domain.com/products/1', function(response) {
-		callbackFunc(response); // 서버에서 받은 데이터 response를 callbackFunc() 함수에 넘겨줌
-	});
-}
+    쉽게 말해, <u>이벤트가 끝나면 다시 전화를 준다!</u>  
+    이걸 이용해서 어떻게 비동기 처리를 해결할 수 있을까?  
+    다음의 예시를 살펴보자.  
 
-getData(function(tableData) {
-	console.log(tableData); // $.get()의 response 값이 tableData에 전달됨
-});
-```
-이러면, 데이터가 들어와야만 콜백 함수로 넘어가기 때문에, 데이터가 올바르게 출력된다.  
-`setTimeout`은 다음 예시와 같이 콜백함수로 처리 가능하다.  
-```javascript
-function first(callback){
-    setTimeout(function() {
-        console.log(1);
-        callback();
-    }, 500);
-}
-function second() {
-    console.log(2);
-}
+    ```javascript
+    function getData() {
+        var tableData;
+        $.get('https://domain.com/products/1', function(response) {
+            tableData = response;
+        });
+        return tableData;
+    }
 
-first(function() {
-    second();
-});
-```
-이러한 경우에는, 5초 뒤에 1 나오고 그 뒤에 2 나온다.  
-이와 같이 콜백함수를 이용하는 경우에는, **Callback Hell**에 빠질 수 있다는 문제가 있다.  
-(콜백함수가 서로 물리고 물려, 가독성 떨어지고 로직 바꾸기도 어렵다)  
-따라서, 아래의 방법들을 주로 이용한다.
+    console.log(getData()); // undefined
+    ```
+    예상한 대로라면, response를 받고 tableData에 넣고, tableData가 출력되어야 하지만 undefined가 출력된다.  
+    그 이유는, get이 비동기 방식으로 작동하여 tableData에 response를 넣기 전에 `return tableData;`를 실행했기 때문이다.  
+    다음과 같이 콜백함수를 사용하면, 이를 해결할 수 있다.  
+    ```javascript
+    function getData(callbackFunc) {
+        $.get('https://domain.com/products/1', function(response) {
+            callbackFunc(response); // 서버에서 받은 데이터 response를 callbackFunc() 함수에 넘겨줌
+        });
+    }
+
+    getData(function(tableData) {
+        console.log(tableData); // $.get()의 response 값이 tableData에 전달됨
+    });
+    ```
+    이러면, 데이터가 들어와야만 콜백 함수로 넘어가기 때문에, 데이터가 올바르게 출력된다.  
+    `setTimeout`은 다음 예시와 같이 콜백함수로 처리 가능하다.  
+    ```javascript
+    function first(callback){
+        setTimeout(function() {
+            console.log(1);
+            callback();
+        }, 500);
+    }
+    function second() {
+        console.log(2);
+    }
+
+    first(function() {
+        second();
+    });
+    ```
+    이러한 경우에는, 5초 뒤에 1 나오고 그 뒤에 2 나온다.  
+    이와 같이 콜백함수를 이용하는 경우에는, **Callback Hell**에 빠질 수 있다는 문제가 있다.  
+    (콜백함수가 서로 물리고 물려, 가독성 떨어지고 로직 바꾸기도 어렵다)  
+    따라서, 아래의 방법들을 주로 이용한다.
 
 2. **<span style="color:blue">Promise</span>**  
 Promise는 다음의 3가지 상태를 가진다.
@@ -189,6 +190,7 @@ Promise는 다음의 3가지 상태를 가진다.
 
 3. **<span style="color:blue">Async</span>**  
 함수 앞에 `async` 키워드를 붙혀주면, **암묵적으로 promise를 반환** 한다.  
+<br>
 예시) 다음의 두 함수는 정확히 같은 역할을 한다.  
     ```javascript
     function getData() {
@@ -214,6 +216,7 @@ Promise는 다음의 3가지 상태를 가진다.
     });
     ```
     `await`은 **promise를 기다리며** (성공 or 실패), async로 정의된 함수 앞에만 사용 가능하다.  
+    
     예시)
     ```javascript
     async function getData() {
