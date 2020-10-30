@@ -239,6 +239,7 @@ Promise는 다음의 3가지 상태를 가진다.
 > ### <u>모듈이란?</u>
 코드를 **여러 개의 파일로 분리**하는 방법!  
 - **Exports**를 사용하여 분리하는 예시  
+
 ```javascript
 // animal.js의 가장 하단부
 module.exports = {
@@ -254,6 +255,7 @@ const animalModule = require('./animal');
 animalModule.func1();
 animalModule.animal.bark();
 ```
+
 
 > ### <u>File System Module</u>
 파일 시스템에 접근하는 내장 모듈로, **파일 생성, 삭제, 읽기, 쓰기, 폴더 생성 및 삭제** 가능  
