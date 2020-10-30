@@ -117,7 +117,8 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
     ```
     예상한 대로라면, response를 받고 tableData에 넣고, tableData가 출력되어야 하지만 undefined가 출력된다.  
     그 이유는, get이 비동기 방식으로 작동하여 tableData에 response를 넣기 전에 `return tableData;`를 실행했기 때문이다.  
-    다음과 같이 콜백함수를 사용하면, 이를 해결할 수 있다.  
+    다음과 같이 콜백함수를 사용하면, 이를 해결할 수 있다. 
+
     ```javascript
     function getData(callbackFunc) {
         $.get('https://domain.com/products/1', function(response) {
@@ -129,8 +130,10 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
         console.log(tableData); // $.get()의 response 값이 tableData에 전달됨
     });
     ```
+
     이러면, 데이터가 들어와야만 콜백 함수로 넘어가기 때문에, 데이터가 올바르게 출력된다.  
     `setTimeout`은 다음 예시와 같이 콜백함수로 처리 가능하다.  
+
     ```javascript
     function first(callback){
         setTimeout(function() {
@@ -146,6 +149,7 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
         second();
     });
     ```
+    
     이러한 경우에는, 5초 뒤에 1 나오고 그 뒤에 2 나온다.  
     이와 같이 콜백함수를 이용하는 경우에는, **Callback Hell**에 빠질 수 있다는 문제가 있다.  
     (콜백함수가 서로 물리고 물려, 가독성 떨어지고 로직 바꾸기도 어렵다)  
@@ -232,3 +236,6 @@ Promise는 다음의 3가지 상태를 가진다.
 
     main();
     ```
+
+### 3. Module
+> ### <u>모듈이란?</u>
