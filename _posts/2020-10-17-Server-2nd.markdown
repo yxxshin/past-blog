@@ -87,6 +87,7 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
 > ### JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?
 1. **<span style="color:blue">Callback Function</span>**  
 콜백함수란? 1. 다른 함수의 인자로써 이용되는 함수 2. 어떤 이벤트에 의해 호출되어지는 함수  
+<br>
 예시)  
     ```javascript
     fun = function(a, b, callback_func){
@@ -238,36 +239,75 @@ Promise는 다음의 3가지 상태를 가진다.
 > ### <u>모듈이란?</u>
 코드를 **여러 개의 파일로 분리**하는 방법!  
 - **Exports**를 사용하여 분리하는 예시  
+```javascript
+// animal.js의 가장 하단부
+module.exports = {
+    func1,
+    func2,
+    animal,
+}
 
-    ```javascript
-    // animal.js의 가장 하단부
-    module.exports = {
-        func1,
-        func2,
-        animal,
-    }
+// main.js의 가장 상단부
+const animalModule = require('./animal');
 
-    // main.js의 가장 상단부
-    const animalModule = require('./animal');
-
-    // animal.js의 함수들을 main.js에서 사용 가능
-    animalModule.func1();
-    animalModule.animal.bark();
-    ```
+// animal.js의 함수들을 main.js에서 사용 가능
+animalModule.func1();
+animalModule.animal.bark();
+```
 
 > ### <u>File System Module</u>
 파일 시스템에 접근하는 내장 모듈로, **파일 생성, 삭제, 읽기, 쓰기, 폴더 생성 및 삭제** 가능  
 
 ```javascript
-//동기적 write
+//동기적 write & read
 const fs = require('fs');
 fs.writeFileSync('filename.txt', data);
+const read_data = fs.readFileSync('filename.txt');
 
-// 비동기적 write
+// 비동기적 write & read
 const fs = require('fs');
 fs.writeFile('filename.txt', data, () => {
     console.log('wrote file');
 });
+fs.readFile('filename.txt', (err, data) => {
+    console.log(`read file with ${data}`);
+});
 ```
 
+> ### <u>Crypto</u>  
+다양한 방식의 암호화를 도와주는 모듈  
+**단방향 암호화 방식**으로, 복호화 할 수 없다 (주로 해시 기법)
+```javascript
+const crypto = require('crypto');
+const password = '1234';
+const fin = crypto.createHash('sha512').update(password).digest('base64');
+```
+- `createHash(algorithm <string>)`  
+사용할 해시 알고리즘을 넣어줌. 주로 `sha512` 사용
+- `update( <string> )`  
+변환할 문자열 넣어줌.
+- `digest(encoding)`  
+인코딩할 알고리즘을 넣어줌. `base64`가 결과가 짧아 많이 이용함
 
+### PBKDF2 (Password-Based Key Derivation Function)  
+가장 많이 사용되는 Key Derivation Function으로, salt를 적용한 후 반복 횟수를 임의로 선택한다.  
+![pbkdf2](https://imgur.com/8BGUJ5E.jpg)
+`crypto.pbkdf2`는 다음과 같은 형태로 사용한다.
+
+```javascript
+crypto.pbkdf2(password, salt, iterations, keylen, digest, callback);
+```
+
+실제로 적용한 예시는 아래와 같다.
+
+```javascript
+const crypto = require('crypto');
+
+crypto.randomBytes(64, (err, buf) => {
+    const salt = buf.toString('base64');
+    console.log(`salt : ${salt}`);
+    crypto.pbkdf2('비밀번호', salt, 100000, 64, 'sha512', (err, key) => {
+        console.log(`password: ${key.toString('base64')}`);
+    });
+});
+```
