@@ -92,7 +92,6 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
     fun = function(a, b, callback_func){
         callback_func(a+b, a-b);
     }
-
     fun(5, 10, function(res1, res2) {
         console.log(res1);
         console.log(res2);
@@ -238,7 +237,8 @@ Promise는 다음의 3가지 상태를 가진다.
 ### 3. Module
 > ### <u>모듈이란?</u>
 코드를 **여러 개의 파일로 분리**하는 방법!  
-- **Exports**를 사용하여 분리하는 예시      
+- **Exports**를 사용하여 분리하는 예시  
+
     ```javascript
     // animal.js의 가장 하단부
     module.exports = {
@@ -257,13 +257,17 @@ Promise는 다음의 3가지 상태를 가진다.
 
 > ### <u>File System Module</u>
 파일 시스템에 접근하는 내장 모듈로, **파일 생성, 삭제, 읽기, 쓰기, 폴더 생성 및 삭제** 가능  
+
 ```javascript
 //동기적 write
 const fs = require('fs');
 fs.writeFileSync('filename.txt', data);
 
 // 비동기적 write
-
+const fs = require('fs');
+fs.writeFile('filename.txt', data, () => {
+    console.log('wrote file');
+});
 ```
 
 
