@@ -99,9 +99,9 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
     });
     ```
 
-    쉽게 말해, <u>이벤트가 끝나면 다시 전화를 준다!</u>  
-    이걸 이용해서 어떻게 비동기 처리를 해결할 수 있을까?  
-    다음의 예시를 살펴보자.  
+쉽게 말해, <u>이벤트가 끝나면 다시 전화를 준다!</u>  
+이걸 이용해서 어떻게 비동기 처리를 해결할 수 있을까?  
+다음의 예시를 살펴보자.  
 
 ```javascript
 function getData() {
@@ -238,24 +238,32 @@ Promise는 다음의 3가지 상태를 가진다.
 ### 3. Module
 > ### <u>모듈이란?</u>
 코드를 **여러 개의 파일로 분리**하는 방법!  
-- **Exports**를 사용하여 분리하는 예시    
-```javascript
-// animal.js의 가장 하단부
-module.exports = {
-    func1,
-    func2,
-    animal,
-}
+- **Exports**를 사용하여 분리하는 예시      
+    ```javascript
+    // animal.js의 가장 하단부
+    module.exports = {
+        func1,
+        func2,
+        animal,
+    }
 
-// main.js의 가장 상단부
-const animalModule = require('./animal');
+    // main.js의 가장 상단부
+    const animalModule = require('./animal');
 
-// animal.js의 함수들을 main.js에서 사용 가능
-animalModule.func1();
-animalModule.animal.bark();
-```
+    // animal.js의 함수들을 main.js에서 사용 가능
+    animalModule.func1();
+    animalModule.animal.bark();
+    ```
 
 > ### <u>File System Module</u>
 파일 시스템에 접근하는 내장 모듈로, **파일 생성, 삭제, 읽기, 쓰기, 폴더 생성 및 삭제** 가능  
 ```javascript
+//동기적 write
 const fs = require('fs');
+fs.writeFileSync('filename.txt', data);
+
+// 비동기적 write
+
+```
+
+
