@@ -30,11 +30,14 @@ cf) Request에서 param, query의 차이점
 **param**: 주소의 변수를 담는다. (ex: `localhost:3000/news/13`)  
 **query**: 주소 바깥의 '?' 이후의 변수를 담는다. (ex: `localhost:3000/news?category=society`)
 
+<br>
 
 > ### <u>HTTP Method</u>
+
 ![HTTP](https://imgur.com/Aen51to.jpg)
 
 > ### <u>HTTP Status Code</u>
+
 HTTP 응답의 상태를 알려주는 코드로, HTTP 요청이 성공적으로 완료되었는지 알려준다  
 ![Status](https://imgur.com/9jfn5iA.jpg)
 
@@ -67,10 +70,14 @@ HTTP 응답의 상태를 알려주는 코드로, HTTP 요청이 성공적으로 
         라우팅의 시작점!
     - <u>package.json</u> : 프로젝트 정보 정의하고, 의존하는 패키지 정보를 명시
 
+<br>
+
 > ### <u>MiddleWare, 미들웨어</u>
 
 **미들웨어** : 서버가 요청-응답과정을 하는 동안 중간의 동작을 해주는 함수  
 request가 올 때마다 미들웨어를 거쳐 response를 보낸다.
+
+<br>
 
 > ### <u>Routing</u>
 
@@ -131,6 +138,8 @@ router.METHOD('path', (req, res) => {
 
 안전하고 크기 조정이 가능한 컴퓨팅을 클라우드에서 제공하는 웹 서비스
 
+<br>
+
 > ### <u>EC2 사용 순서:</u>
 
 1. EC2 인스턴스 생성 (Cloud Computer 대여)
@@ -138,11 +147,15 @@ router.METHOD('path', (req, res) => {
 3. SSH 접속 (ssh를 이용하여 빌린 컴퓨터에 접속)
 4. 서버 환경 구축 (빌린 컴퓨터에 node 깔아서 돌리기)
 
+<br>
+
 > ### <u> Key Pair란?</u>  
 
 EC2 서버에 접근하려면 개인키와 공개키로 구성된 키페어가 필요한데, 공개키는 AWS에 업로드되어 가상 서버에서 보관하고 개인키는 자신이 소유한다.  
 EC2에 접속할 때마다 키페어를 이용하여 접근한다!  
 보안이 취약한 곳에 올리면 절대 안된다!!  
+
+<br>
 
 > ### <u> EIP(Elastic IP)란?</u>  
 
@@ -150,11 +163,15 @@ EC2가 재시작될 때마다 Public IP가 변경되기 때문에, 이를 고정
 EIP가 혼자 돌아가면 과금되기 때문에, 항상 연결해 주어야 한다!!  
 즉, EC2 중단하기 전에 반드시 EIP를 release 해주어야 함. (실제로 안했더니 1주일에 0.02$ 정도 나갔다) 
 
+<br>
+
 > ### <u>EC2 접속 방법</u>
 
 1. Terminal에서 key pair가 있는 위치로 이동
 2. `chmod 400 {pemKeyName}.pem`
 3. `sudo ssh -i '{pemKeyName}.pem' ubuntu@{EIP}`
+
+<br>
 
 > ### <u>PM2 (NodeJS Process Manager)</u>
 
