@@ -36,6 +36,7 @@ tags: [ server ]
 - 주로 기본키로 사용됨
 
 **Foreign key**(외래키) : 한 테이블의 column 중 다른 테이블의 row를 식별할 수 있는 key
+
 <br>
 
 
