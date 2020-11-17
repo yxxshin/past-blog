@@ -13,6 +13,7 @@ tags: [ server ]
 
 ### 1. Database
 > ### <u>데이터 베이스</u>
+
 서버는 데이터베이스에 접근하여 데이터들을 Read/Write 한다.  
 ![db](https://imgur.com/edh8RXv.png)
 
@@ -22,6 +23,7 @@ tags: [ server ]
 - **Relational Database**(관계형 데이터 베이스): key-value 관계를 테이블화 한 것
 
 > ### <u>데이터 베이스 용어 정리</u>
+
 **Primary Key**(기본키) : 다른 데이터와 구별할 수 있는 식별자
 - 한 테이블에는 하나 혹은 그 이상의 primary key가 있어야 함
 - Not Null, Unique
@@ -33,7 +35,9 @@ tags: [ server ]
 
 **Foreign key**(외래키) : 한 테이블의 column 중 다른 테이블의 row를 식별할 수 있는 key
 
+
 > ### <u>Relation 관계</u>
+
 **1 : 1 관계**  
 말 그대로 1:1로 매핑되는 관계 (예: 이름 - 주민번호)
 
@@ -56,14 +60,14 @@ tags: [ server ]
     - **갱신 이상** : 중복 튜플인데 일부만 변경되는 문제 (데이터 모순)
     - **삭제 이상** : 튜플을 삭제했는데 중요 데이터가지 함께 삭제되는 데이터 손실 문제
 
-**1차 정규화**  
+**<span style="color:blue">< 1차 정규화 ></span>**  
 조건: 각 row 마다 **column이 값을 하나씩만** 가져야 함 (즉, 컬럼이 원자값을 가져야 함)  
 쉬운 설명:
 1. 모든 Domain에 값이 한 개씩만
 2. 반복되는 group이 없음
 3. 기본키(PK)로 각 데이터가 식별 가능해야함
 
-**2차 정규화**  
+**<span style="color:blue">< 2차 정규화 ></span>**  
 조건: **부분 함수적 종속**이 없이, 모든 컬럼이 **완전 함수적 종속**을 만족함  
 **함수적 종속**: X에 의해 Y가 결정되면, Y는 X에 대해 함수적 종속이다  
 이 때 X를 **결정자**, Y를 **종속자**라고 한다  
@@ -71,19 +75,21 @@ tags: [ server ]
 **완전 함수적 종속**: {X1, X2} → Y 에서, X1과 X2가 모두 있어야 Y가 결정되는 경우
 
 
-**3차 정규화**  
+**<span style="color:blue">< 3차 정규화 ></span>**  
 조건: 2차 정규화가 되어 있고, **이행적 함수 종속**이 없어야 함  
 쉬운 설명: 기본 키가 아닌 속성들은 **기본 키에만 의존**해야 함
 
-**역 정규화**  
+**<span style = "color:blue">< 역 정규화 ></span>**  
 시스템의 퍼포먼스를 위해 정규화에 위배되는 행위를 하는 것  
 
 ### 2. Sequelize ORM (Object Relational Mapping)
 > ### <u>Sequelize ORM이란?</u>
+
 NodeJS에서 JS의 객체와 DB의 관계를 매핑해주는 라이브러리!  
 SQL을 사용하지 않고 JS로 DB에 접근한다  
 
 > ### <u>Sequelize Project</u>
+
 처음: `npm install sequelize-cli sequelize mysql2`로 모듈 3개 깔아주고, `sequelize init` 해주면 sequelize project가 생성된다.  
 - `config/config.json` : DB의 정보를 담는 공간
 - `models/index.js` : DB의 테이블을 정의하는 곳 (MySQL의 Table에 대응)  
@@ -111,7 +117,8 @@ sequelize.sync({ alter: false })
 - `sequelize.sync({alter: true})` : DB의 테이블 현재 상태(컬럼, DataType)를 확인하고 필요한 변경을 수행하여 모델과 일치시킴
 
 
-**Sequelize로 Model 정의하기**  
+> ### <u>Sequelize로 Model 정의하기  </u>
+
 기본적으로는 다음과 같이 `sequelize.define()`를 이용하여 정의한다.
 ```javascript
 sequelize.define('모델이름', { /* 스키마 */ }, { /* 스키마 옵션 */ });
@@ -166,10 +173,12 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
 ![crud](https://imgur.com/9hfq1hz.png)
 
 예시들 (Sequelize query에서 `const { User } = require('models/index.js 상대경로');` 해줘야 함)
-- Create
+- **Create**
     - SQL  
     `INSERT INTO users (name, age, address) VALUES ('신연상', 21, '강남구');`
-    - Sequelize query  
+
+    - Sequelize query
+
     ```javascript
     // Model.create({ 정보 });
     const user = await User.create( {
@@ -178,11 +187,14 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
         address: '강남구',
     });
     ```
-- findOne
+
+- **findOne**
     - SQL  
-    ` select * from users LIMIT 1;`  
-    ` select * from users WHERE name = '신연상';`
+    `select * from users LIMIT 1;` ,  
+    `select * from users WHERE name = '신연상';`
+
     - Sequelize query  
+
     ```javascript
     const user = await User.readOne({ });
 
@@ -193,12 +205,15 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
         },
     });
     ```
+
 - findAll
     - SQL  
-    ` select * from users;`  
-    ` select name, address from users where address = '강남구';`  
+    ` select * from users;`,   
+    ` select name, address from users where address = '강남구';`,  
     ` select age, name from users where age > 21;`
+
     - Sequelize query
+
     ```javascript
     const user = await User.findAll({ });
 
@@ -218,10 +233,13 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
         }
     });
     ```
+
 - Update
     - SQL  
     ` update users set name = '바뀔이름' where id = 2;`
+
     - Sequelize query
+
     ```javascript
     // Model.update({ /* 수정할 내용 */ }, { /* 어떤 로우를 수정 */ });
     const user = await User.update({ name: '바꿀 이름' }, {
@@ -229,10 +247,13 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
             id: 2
         }
     });
+
 - Destroy
     - SQL  
     ` delete from users where id = 2;`
+
     - Sequelize query
+
     ```javascript
     // Model.destroy({ /* 삭제할 로우 */ })
     const user = await User.destroy( {
@@ -241,7 +262,8 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
         }
     });
 
+
 참고사항들:
-- Sequelize는 자체적으로 promise를 반환하기 때문에 `async / await` 사용 가능  
+- Sequelize는 자체적으로 promise를 반환하기 때문에 `async/await` 사용 가능  
 - Sequelize 객체 내부의 Op 객체를 불러와 특수한 연산 사용 가능!  
     ex: `Op.gt`(초과) `Op.gte`(이상) `Op.lt`(미만) `Op.lte`(이하) `Op.ne`(같지않음) `Op.or`(또는) `Op.in`(배열 요소 중 하나) `Op.notIn`(배열 요소와 모두 다름)
