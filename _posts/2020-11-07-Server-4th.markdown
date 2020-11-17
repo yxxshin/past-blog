@@ -22,7 +22,7 @@ tags: [ server ]
 - 데이터베이스를 관리하는 시스템을 **DBMS**(Database Management System) 이라 함.  
 - **Relational Database**(관계형 데이터 베이스): key-value 관계를 테이블화 한 것
 
-</br>
+<br>
 
 > ### <u>데이터 베이스 용어 정리</u>
 
@@ -36,8 +36,7 @@ tags: [ server ]
 - 주로 기본키로 사용됨
 
 **Foreign key**(외래키) : 한 테이블의 column 중 다른 테이블의 row를 식별할 수 있는 key
-
-</br>
+<br>
 
 
 > ### <u>Relation 관계</u>
@@ -53,7 +52,7 @@ tags: [ server ]
 양쪽 개체가 서로 1:N 관계로 보고 있는 관계 (예: 이름 - 스터디)  
 이러한 경우에는 테이블을 잘 나누어 주어야 한다 → 정규화
 
-</br>
+<br>
 
 > ### <u>정규화</u>
 관계형 데이터 베이스를 논리적이고 직관적으로 만드는 과정
@@ -88,7 +87,7 @@ tags: [ server ]
 **<span style = "color:blue">< 역 정규화 ></span>**  
 시스템의 퍼포먼스를 위해 정규화에 위배되는 행위를 하는 것  
 
-</br>
+<br>
 
 ### 2. Sequelize ORM (Object Relational Mapping)
 > ### <u>Sequelize ORM이란?</u>
@@ -96,7 +95,7 @@ tags: [ server ]
 NodeJS에서 JS의 객체와 DB의 관계를 매핑해주는 라이브러리!  
 SQL을 사용하지 않고 JS로 DB에 접근한다  
 
-</br>
+<br>
 
 > ### <u>Sequelize Project</u>
 
@@ -126,7 +125,7 @@ sequelize.sync({ alter: false })
 - `sequelize.sync({force: true})` : 테이블이 이미 존재하면 삭제하고 생성
 - `sequelize.sync({alter: true})` : DB의 테이블 현재 상태(컬럼, DataType)를 확인하고 필요한 변경을 수행하여 모델과 일치시킴
 
-</br>
+<br>
 
 > ### <u>Sequelize로 Model 정의하기  </u>
 
@@ -201,7 +200,7 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
 
 - **findOne**
     - SQL  
-    `select * from users LIMIT 1;` ,  
+    `select * from users LIMIT 1;`   
     `select * from users WHERE name = '신연상';`
 
     - Sequelize query  
@@ -219,9 +218,9 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
 
 - findAll
     - SQL  
-    ` select * from users;`,   
-    ` select name, address from users where address = '강남구';`,  
-    ` select age, name from users where age > 21;`
+    `select * from users;`   
+    `select name, address from users where address = '강남구';`  
+    `select age, name from users where age > 21;`
 
     - Sequelize query
 
@@ -247,7 +246,7 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
 
 - Update
     - SQL  
-    ` update users set name = '바뀔이름' where id = 2;`
+    `update users set name = '바뀔이름' where id = 2;`
 
     - Sequelize query
 
@@ -262,7 +261,7 @@ Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
 
 - Destroy
     - SQL  
-    ` delete from users where id = 2;`
+    `delete from users where id = 2;`
 
     - Sequelize query
 
