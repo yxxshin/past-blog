@@ -56,6 +56,7 @@ tags: [ server ]
 <br>
 
 > ### <u>정규화</u>
+
 관계형 데이터 베이스를 논리적이고 직관적으로 만드는 과정
 
 **목적**
@@ -180,6 +181,7 @@ module.exports = db;
 ```
 
 > ### <u>Sequelize Query</u>
+
 Sequelize 쿼리를 이용하여 CRUD 작업을 해보자!
 ![crud](https://imgur.com/9hfq1hz.png)
 
