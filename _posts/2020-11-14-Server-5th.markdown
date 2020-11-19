@@ -1,0 +1,262 @@
+---
+layout: post
+title:  "[ON SOPT] Server 5th Seminar"
+description: 프로젝트 계층 분리, Sequelize ORM, S3 + Multer
+date:   2020-11-14 20:00:00 +0900
+categories: [ Others ]
+tags: [ server ]
+---
+
+### 0. 5주차 세미나 사전준비
+1. AWS S3 세팅
+
+### 1. 프로젝트 계층 분리
+
+- **Router** : 특정 엔드포인트에 대한 클라의 요청에 앱이 응답하는 방법을 결정
+- **Controller** : 요청을 받고 Service 계층에서 받은 데이터를 응답
+- **Model** : 모델의 스키마 정의 및 데이터 접근
+- **Service** : 데이터 로직 핸들링 & 가공
+
+Router 에서 Controller - Express에 적용:  
+1. 각각을 하나의 폴더로 만들기 (controller 폴더와 service 폴더 생성)
+2. 기존 세미나의 `routes/users/index.js`의 내용을 `controller/userController.js`로 옮긴다!  
+예시:  
+```javascript
+/* util, responseMessage, statusCode, User 등 필요한 것들 상대경로로 가져오기 */
+
+module.exports = {
+    signup : async (req, res) => {
+        // 구현
+    },
+    signin : async (req, res) => {
+        // 구현
+    },
+}
+```
+3. `routes/users/index.js` 에는 다음과 같이 받아준다.
+```javascript
+const userController = require('../../controller/userController');
+
+router.post('/signup', userController.signup);
+router.post('/signin', userController.signin);
+```
+4. 사용하지 않는 모듈들을 제거해 주면, 더 깔끔하다!!
+
+비슷한 방법으로 Controller 에서 Service 로 계층 분리 할 수 있다!
+
+<br>
+
+### 2. Workbench 사용법
+
+- 테이블 설정에서, 테이블 속성 / 제약 조건들 설정하기
+- 테이블 설정 하단의 Foreign Keys 를 통해 외래키 설정 가능  
+cf. On Update / On Delete 부분 추가설명  
+개체를 변경/삭제할 때 다른 개체가 변경/삭제할 개체를 참조하고 있을 경우,  
+    - RESTRICT :  변경/삭제가 취소 (제한)  
+    - CASCADE : 함께 변경/삭제  
+    - NOACTION : 변경/삭제할 개체만 변경/삭제되고 참조하고 있는 개체는 변동 X
+    - SET NULL : 참조하고 있는 값은 NULL로 세팅
+- **ERD**(Entity-Relationship Diagram) 보기 :  
+상단의 Database 탭 - Reverse Engineer - Continue들 누르기 (Schema 선택하기)
+
+<br>
+
+### 3. Sequelize Associations  
+> ### <u>Association</u>
+
+Sequelize에서 관계를 정의할 때 지원하는 sequelize model의 sub class  
+`hasOne, belongsTo, belongsToMany, hasMany` 가 있다.  
+![asso](https://imgur.com/3KPXj50.png)
+
+> ### <u>1 : 1</u>
+
+![1:1](https://imgur.com/2CnjHAE.png)
+예시:  
+```javascript
+db.User = require('./user')(sequelize, Sequelize);
+db.Profile = require('./profile')(sequelize, Sequelize);
+
+db.User.hasOne(db.Profile);
+db.Profile.belongsTo(db.User);
+```
+- 참고: 실습에서는 이 작업들을 `models/index.js` 에서 해줌
+- `hasOne`과 `belongsTo`가 반대로 되지 않도록 주의!!  
+(`belongsTo`를 사용하는 모델에 외래키가 생성된다)
+
+> ### <u>1 : M</u>
+
+![1:M](https://imgur.com/PJfwqPN.png)
+
+예시:
+```javascript
+db.User = require('./user')(sequelize, Sequelize);
+db.Post = require('./post')(sequelize, Sequelize);
+
+// db.User.hasMany(db.Post);
+db.User.hasMany(db.Post, { foreignKey: { name: 'UserId', allowNull: false } , onDelete: 'cascade' });
+db.Post.belongsTo(db.User);
+```
+
+- 외래키 이름을 지정해주지 않으면 기본적으로 `hasMany`를 사용하는 테이블 이름 + Id 로 설정된다!
+- On Delete의 기본값은 `set Null`, On Update의 기본값은 `cascade` 이다
+
+> ### <u>M : N</u>
+
+![M:N](https://imgur.com/gNo1lqT.png)
+
+예시:
+```javascript
+/* M : N 관계를 위해 through 테이블을 연결해야 한다 */
+const { User, Post } = require('../models');
+
+module.exports = (sequelize, DataTypes) => {
+    return sequelize.define('Like', {
+        // 모델의 Attributes(Column) 정의
+        PostId: {
+            type: DataTypes.INTEGER,
+            reference: {
+                model: Post,
+                key: 'id',
+            }
+        },
+        UserId: {
+            type: DataTypes.INTEGER,
+            reference: {
+                model: User,
+                key: 'id',
+            }
+        },
+    }, {
+        freezeTableName: true,
+        timetables: true
+    })
+}
+
+/* 이후는 위의 예시들처럼 association 정의 */
+db.User = require('/user')(sequelize, Sequelize)
+db.Post = require('/user')(sequelize, Sequelize)
+db.Like = require('/like')(sequelize, Sequelize)
+
+/* 1 : N    User : Post */
+db.User.hasMany(db.Post, { onDelete: 'cascade' });
+db.Post.belongsTo(db.User);
+
+/* M : N    User : Post => Like */
+db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
+db.Post.belongsToMany(db.User, { through: 'Like', as: 'Liker' });
+```
+
+- On Delete의 기본값은 `cascade`, On Update의 기본값은 `cascade` 이다
+- 위의 예시의 경우 User Model은 Post Model과 두 번의 Association을 가진다!  
+    따라서, User Model이 봤을 때 Post Model의 이름이 중복되지 않도록, `as:` 옵션으로 Model 이름을 바꾸어준다
+
+<br>
+
+> ### <u>JOIN</u>
+
+**JOIN**이란, 테이블간 공통된 컬럼(조건)으로 테이블을 합쳐 표현하는 것이다  
+(이 글에서의 예시: User Model의 id 값으로 Post Model의 UserId 외래키를 연관지어 테이블을 합친다)  
+`include`옵션을 이용하여 JOIN 할 수 있고, `attributes`를 통해 필요한 컬럼만 담아서 깔끔하게 조회할 수 있다.
+
+예시:  
+```Javascript
+const post = await Post.findAll( {
+    attributes: ['title', 'contents'],
+    include: [{
+        model: User,
+        attributes: ['id', 'userName', 'email'],
+    }, {
+        model: User,
+        as: 'Liker',
+        attributes: { exclude: ['password', 'salt', 'id', 'email']}
+    }]
+});
+```
+
+- `exclude` 옵션은 쓴 컬럼들을 제외하고 read하는 옵션이다
+- 모델이 여러 개인 경우에는 `as` 옵션으로 모델 별명을 만들어, 불러올 때 정확히 불러오자
+
+<br>
+
+> ### <u>실습</u>
+
+- `postController.js`에서 사용한 쿼리 예시이다
+```javascript
+// 1. user를 Read하는 쿼리
+const user = await User.findOne({ where: { id: userId }});
+// 2. post를 Create하는 쿼리
+const post = await Post.create({ title, contents });
+// 3. 방금 생성한 Post에 외래키를 추가해주는 Update 쿼리 (Sequelize에서 제공하는 Special Method)
+await user.addPost(post);
+```
+
+<br>
+
+### 4. S3 + Multer
+> ### <u>Multer</u>
+
+NodeJS에서 파일 업로드를 위해 사용되는 **multipart/form-data**를 다루기 위한 NodeJS **Middleware**  
+- `npm install multer`로 설치할 수 있다
+- `multer.single(fieldname)` : `fieldname`으로 파일 하나 받아서 `req.file`에 저장
+- `multer.array(fieldname, maxCount)` : `fieldname`으로 파일 여러 개 받아서 `req.files`에 저장
+
+예시:  
+```javascript
+router.post('/single', upload.single('image'), async (req, res) => {
+    // console.log(req.file);
+    const image = req.file.location;
+    res.send( {
+        imageUrl: image,
+        file: req.file,
+        body: req.body
+    });
+});
+```
+- Postman 으로 쏴줄 때는 `Body`에서 `form-data`를 선택하여 쏴준다.
+
+<br>
+
+> ### <u>AWS S3</u>
+
+**S3**(Simple Storage Service): AWS에서 제공하는 클라우드 스토리지 서비스  
+- 프리티어 기준 용량 5GB, 월 당 업로드(PUT) 5000, 다운로드(GET) 20000회 가능
+- `npm install multer-s3 aws-sdk`로 두 개 설치해준다.
+- `config/s3.json`에 `accesskeyId`, `secretAccessKey`, `region` 적어서 bucket으로의 접근 권한을 얻는다.
+
+예시:
+```javascript
+/* modules/multer.js 파일 */
+const multer = require('multer');
+const multerS3 = require('multer-s3');
+const aws = require('aws-sdk');
+aws.config.loadFromPath(__dirname + '/../config/s3.json');
+
+const s3 = new aws.S3();
+const upload = multer({
+    storage: multerS3({
+        s3,
+        bucket: '<bucket name>',
+        acl: 'public-read',
+        key: function(req, file, cb) {
+            // 이름 설정
+            cb(null, 'images/origin/' + Date.now() + '.' + file.originalname.split('.').pop());
+        }
+    })
+});
+module.exports = upload;
+
+/* routes/multer/index.js 파일 */
+const upload = require('../../modules/multer');
+
+router.post('/single', upload.single('image'), async (req, res) => {
+    // 본문 생략 ( 위 참조 )
+});
+
+/* config/s3.json 파일 */
+{
+    "accessKeyId": "<S3 엑세스 키 아이디>",
+    "secretAccessKey": "<S3 시크릿 엑세스 키 아이디>",
+    "region": "ap-northeast-2"
+}
+```
+- `config` 폴더는 항상 `.gitignore` 파일에 명시하여 GitHub에 올라가지 않도록 한다!
