@@ -18,7 +18,7 @@ NodeJS는 크롬 V8 엔진으로 빌드된 **JavaScript**를 실행할 수 있�
 
 > ### <u>NodeJS의 특징</u>
 
-1. **<span style="color:blue">Non-blocking I/O</span>**  
+**<span style="color:blue">Non-blocking I/O</span>**  
 
 ![Non-blocking](https://imgur.com/gTiLOvh.jpg)  
 - Blocking  
@@ -31,7 +31,7 @@ NodeJS는 크롬 V8 엔진으로 빌드된 **JavaScript**를 실행할 수 있�
     결과론적으로 다음과 같이 작업이 이루어진다.
     ![easy](https://imgur.com/RZi1KUJ.jpg)
 
-2. **<span style="color:blue">Single Thread</span>**
+**<span style="color:blue">Single Thread</span>**
 
 - **프로세스**  
 운영 체제에서 할당하는 작업의 단위  
@@ -47,7 +47,7 @@ Q. Single Thread보다 Multi Thread가 더 좋지 않나요?
 A. 쓰레드를 카페의 바리스타로 비유한 다음 예시로 확인하자.  
 ![Barista](https://imgur.com/eYbhX2y.jpg)
 
-3. **<span style="color:blue">Event Driven</span>**
+**<span style="color:blue">Event Driven</span>**
    
 이벤트가 발생할 때 미리 지정해 놓은 작업을 수행  
 Node는 이벤트 리스너(Event Listener)에 콜백 함수를 지정해서 동작한다. <center><img src="https://imgur.com/ljqZiB9.jpg" width="400"></center>
@@ -77,6 +77,8 @@ JavaScript 엔진은 **Memory Heap, CallStack** 의 두 가지 주요 구성 요
     타이머나 이벤트 리스너들이 대기하는 곳  
     여러 작업 동시에 실행 가능
 
+<br>
+
 ### 2. 비동기 흐름 제어
 > ### <u>Blocking ↔ Non-Blocking, Sync ↔ Async 구분하기</u> 
 
@@ -93,8 +95,10 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
 
 > ### <u>JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?</u>
 
-1. **<span style="color:blue">Callback Function</span>**  
-콜백함수란? 1. 다른 함수의 인자로써 이용되는 함수 2. 어떤 이벤트에 의해 호출되어지는 함수 
+**<span style="color:blue">Callback Function</span>**  
+콜백함수란?  
+    1. 다른 함수의 인자로써 이용되는 함수  
+    2. 어떤 이벤트에 의해 호출되어지는 함수 
 
 <br>
 
@@ -165,7 +169,7 @@ first(function() {
 (콜백함수가 서로 물리고 물려, 가독성 떨어지고 로직 바꾸기도 어렵다)  
 따라서, 아래의 방법들을 주로 이용한다.
 
-2. **<span style="color:blue">Promise</span>**
+**<span style="color:blue">Promise</span>**
 
 Promise는 다음의 3가지 상태를 가진다.
 - <u>Pending</u> : 최초로 생성, 비동기 작업 수행중..
@@ -204,7 +208,7 @@ Promise는 다음의 3가지 상태를 가진다.
     ```
     cf) 여러 개의 promise를 `.then()`을 연달아 사용할 수 있다 (Promise Chaining)  
 
-3. **<span style="color:blue">Async</span>**  
+**<span style="color:blue">Async</span>**  
 
 함수 앞에 `async` 키워드를 붙혀주면, **암묵적으로 promise를 반환** 한다.  
 
@@ -275,6 +279,7 @@ animalModule.func1();
 animalModule.animal.bark();
 ```
 
+<br>
 
 > ### <u>File System Module</u>
 
@@ -295,6 +300,8 @@ fs.readFile('filename.txt', (err, data) => {
     console.log(`read file with ${data}`);
 });
 ```
+
+<br>
 
 > ### <u>Crypto</u>  
 
