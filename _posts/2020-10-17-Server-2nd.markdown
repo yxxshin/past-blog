@@ -17,19 +17,22 @@ NodeJS는 크롬 V8 엔진으로 빌드된 **JavaScript**를 실행할 수 있�
 
 
 > ### <u>NodeJS의 특징</u>
+
 1. **<span style="color:blue">Non-blocking I/O</span>**  
+
 ![Non-blocking](https://imgur.com/gTiLOvh.jpg)  
 - Blocking  
-호출된 함수가 자신의 작업이 끝날 때까지 **제어권**을 가짐.  
-호출한 함수는 대기하며, 그 동안 프로그램 처리 진행 X
+    호출된 함수가 자신의 작업이 끝날 때까지 **제어권**을 가짐.  
+    호출한 함수는 대기하며, 그 동안 프로그램 처리 진행 X
 - Non-Blocking  
-호출한 함수가 바로 다음 호출한 함수에게 **제어권**을 줌.  
-다음 작업 바로 수행할 수 있음.  
-<br>
-결과론적으로 다음과 같이 작업이 이루어진다.
-![easy](https://imgur.com/RZi1KUJ.jpg)
+    호출한 함수가 바로 다음 호출한 함수에게 **제어권**을 줌.  
+    다음 작업 바로 수행할 수 있음.  
+    <br>
+    결과론적으로 다음과 같이 작업이 이루어진다.
+    ![easy](https://imgur.com/RZi1KUJ.jpg)
 
 2. **<span style="color:blue">Single Thread</span>**
+
 - **프로세스**  
 운영 체제에서 할당하는 작업의 단위  
 프로세스 간 자원(메모리) 공유 X
@@ -44,7 +47,8 @@ Q. Single Thread보다 Multi Thread가 더 좋지 않나요?
 A. 쓰레드를 카페의 바리스타로 비유한 다음 예시로 확인하자.  
 ![Barista](https://imgur.com/eYbhX2y.jpg)
 
-3. **<span style="color:blue">Event Driven</span>**   
+3. **<span style="color:blue">Event Driven</span>**
+   
 이벤트가 발생할 때 미리 지정해 놓은 작업을 수행  
 Node는 이벤트 리스너(Event Listener)에 콜백 함수를 지정해서 동작한다. <center><img src="https://imgur.com/ljqZiB9.jpg" width="400"></center>
 (부가적인 설명)  
@@ -57,7 +61,9 @@ JavaScript 엔진은 **Memory Heap, CallStack** 의 두 가지 주요 구성 요
 - CallStack의 사이즈를 초과한다면 **Stack Overflow**가 발생한다. (무한루프 등등)
 - JavaScript는 Single Thread이므로, 호출 스택이 하나다. (즉, 한 번에 하나의 일만 처리할 수 있음)  
 → 하나의 함수가 엄청 느리면?? **비동기 콜백(Asynchronous CallBack)**을 이용!!  
+
 <br>
+
 - **Asynchronous CallBack (비동기 콜백)**
 ![콜백](https://imgur.com/MZSswLC.jpg)
     - **콜백 큐(Callback Queue)**  
@@ -72,7 +78,8 @@ JavaScript 엔진은 **Memory Heap, CallStack** 의 두 가지 주요 구성 요
     여러 작업 동시에 실행 가능
 
 ### 2. 비동기 흐름 제어
-> ### Blocking ↔ Non-Blocking, Sync ↔ Async 구분하기  
+> ### <u>Blocking ↔ Non-Blocking, Sync ↔ Async 구분하기</u> 
+
 - **Blocking ↔ Non-Blocking : 호출되는 함수가 바로 리턴하느냐 마느냐**  
 Blocking: 바로 리턴 X  
 Non-Blocking: 바로 리턴
@@ -84,10 +91,13 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
 하지만 Node는 대부분 **비동기적(Asynchronous)** 으로 작동한다.  
 그럼, 다음의 문제 상황에 직면한다.  
 
-> ### JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?
+> ### <u>JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?</u>
+
 1. **<span style="color:blue">Callback Function</span>**  
-콜백함수란? 1. 다른 함수의 인자로써 이용되는 함수 2. 어떤 이벤트에 의해 호출되어지는 함수  
+콜백함수란? 1. 다른 함수의 인자로써 이용되는 함수 2. 어떤 이벤트에 의해 호출되어지는 함수 
+
 <br>
+
 예시)  
     ```javascript
     fun = function(a, b, callback_func){
@@ -114,9 +124,11 @@ function getData() {
 
 console.log(getData()); // undefined
 ```
+
 예상한 대로라면, response를 받고 tableData에 넣고, tableData가 출력되어야 하지만 undefined가 출력된다.  
 그 이유는, get이 비동기 방식으로 작동하여 tableData에 response를 넣기 전에 `return tableData;`를 실행했기 때문이다.  
 다음과 같이 콜백함수를 사용하면, 이를 해결할 수 있다. 
+
 ```javascript
 function getData(callbackFunc) {
     $.get('https://domain.com/products/1', function(response) {
@@ -153,7 +165,8 @@ first(function() {
 (콜백함수가 서로 물리고 물려, 가독성 떨어지고 로직 바꾸기도 어렵다)  
 따라서, 아래의 방법들을 주로 이용한다.
 
-2. **<span style="color:blue">Promise</span>**  
+2. **<span style="color:blue">Promise</span>**
+
 Promise는 다음의 3가지 상태를 가진다.
 - <u>Pending</u> : 최초로 생성, 비동기 작업 수행중..
 - <u>Fullfilled</u> : 비동기 작업이 성공적으로 완료됨
@@ -192,51 +205,57 @@ Promise는 다음의 3가지 상태를 가진다.
     cf) 여러 개의 promise를 `.then()`을 연달아 사용할 수 있다 (Promise Chaining)  
 
 3. **<span style="color:blue">Async</span>**  
+
 함수 앞에 `async` 키워드를 붙혀주면, **암묵적으로 promise를 반환** 한다.  
+
 <br>
+
 예시) 다음의 두 함수는 정확히 같은 역할을 한다.  
-    ```javascript
-    function getData() {
-        return new Promise((resolve, reject) => {
-            const data = 'data';    // 오래 걸림
-            resolve(data)
-        })
-    }
-
-    const data = getData();
-    data.then( (value) => {
-        console.log(value);
-    });
-    ```
-    ```javascript
-    async function getData() {
+```javascript
+function getData() {
+    return new Promise((resolve, reject) => {
         const data = 'data';    // 오래 걸림
-        return data;
-    }
-    const data = getData();
-    data.then( (value) => {
-        console.log(value);
-    });
-    ```
-    `await`은 **promise를 기다리며** (성공 or 실패), async로 정의된 함수 앞에만 사용 가능하다.  
-    
-    예시)
-    ```javascript
-    async function getData() {
-        const data = 'data';    // 오래 걸림
-        return data;
-    }
+        resolve(data)
+    })
+}
 
-    async function main() {
-        const data = await getData();
-        console.log(data);
-    }
+const data = getData();
+data.then( (value) => {
+    console.log(value);
+});
+```
 
-    main();
-    ```
+```javascript
+async function getData() {
+    const data = 'data';    // 오래 걸림
+    return data;
+}
+const data = getData();
+data.then( (value) => {
+    console.log(value);
+});
+```
+
+`await`은 **promise를 기다리며** (성공 or 실패), async로 정의된 함수 앞에만 사용 가능하다.  
+
+예시)
+```javascript
+async function getData() {
+    const data = 'data';    // 오래 걸림
+    return data;
+}
+
+async function main() {
+    const data = await getData();
+    console.log(data);
+}
+
+main();
+```
 
 ### 3. Module
 > ### <u>모듈이란?</u>
+
 코드를 **여러 개의 파일로 분리**하는 방법!  
 - **Exports**를 사용하여 분리하는 예시  
 
@@ -258,6 +277,7 @@ animalModule.animal.bark();
 
 
 > ### <u>File System Module</u>
+
 파일 시스템에 접근하는 내장 모듈로, **파일 생성, 삭제, 읽기, 쓰기, 폴더 생성 및 삭제** 가능  
 
 ```javascript
@@ -277,6 +297,7 @@ fs.readFile('filename.txt', (err, data) => {
 ```
 
 > ### <u>Crypto</u>  
+
 다양한 방식의 암호화를 도와주는 모듈  
 **단방향 암호화 방식**으로, 복호화 할 수 없다 (주로 해시 기법)
 ```javascript
@@ -291,7 +312,7 @@ const fin = crypto.createHash('sha512').update(password).digest('base64');
 - `digest(encoding)`  
 인코딩할 알고리즘을 넣어줌. `base64`가 결과가 짧아 많이 이용함
 
-### PBKDF2 (Password-Based Key Derivation Function)  
+> ### <u>PBKDF2 (Password-Based Key Derivation Function)</u>  
 가장 많이 사용되는 Key Derivation Function으로, salt를 적용한 후 반복 횟수를 임의로 선택한다.  
 ![pbkdf2](https://imgur.com/8BGUJ5E.jpg)
 `crypto.pbkdf2`는 다음과 같은 형태로 사용한다.
