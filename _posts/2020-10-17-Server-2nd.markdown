@@ -93,7 +93,7 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
 하지만 Node는 대부분 **비동기적(Asynchronous)** 으로 작동한다.  
 그럼, 다음의 문제 상황에 직면한다.  
 
-> ### <u>JavaScript에서 **비동기적**으로 실행하고 싶은 코드가 있다면..?</u>
+> ### <u>JavaScript에서 비동기적으로 실행하고 싶은 코드가 있다면..?</u>
 
 **<span style="color:blue">Callback Function</span>**  
 콜백함수란?  
@@ -103,15 +103,15 @@ JavaScript는 기본적으로 **동기적(Synchronous)** 으로 실행된다.
 <br>
 
 예시)  
-    ```javascript
-    fun = function(a, b, callback_func){
-        callback_func(a+b, a-b);
-    }
-    fun(5, 10, function(res1, res2) {
-        console.log(res1);
-        console.log(res2);
-    });
-    ```
+```javascript
+fun = function(a, b, callback_func){
+    callback_func(a+b, a-b);
+}
+fun(5, 10, function(res1, res2) {
+    console.log(res1);
+    console.log(res2);
+});
+```
 
 쉽게 말해, <u>이벤트가 끝나면 다시 전화를 준다!</u>  
 이걸 이용해서 어떻게 비동기 처리를 해결할 수 있을까?  
