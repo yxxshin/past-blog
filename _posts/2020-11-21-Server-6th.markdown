@@ -36,6 +36,8 @@ HTTP에서 클라이언트의 상태를 PC에 저장한 후 필요 시 사용한
 - <span style="color:blue"> **JWT(Json Web Token)** </span>  
 클라이언트의 세션 상태를 저장하지 않고, <u>필요한 정보를 토큰 body에 저장해서 클라이언트가 이를 증명서처럼 사용</u>
 
+<br>
+
 > ### <u>JWT란?</u>
 
 JWT는 **`Header.Payload.Verify_Signature`** 으로 구성된다.  
