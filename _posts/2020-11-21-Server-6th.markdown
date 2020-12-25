@@ -1,0 +1,215 @@
+---
+layout: post
+title:  "[ON SOPT] Server 6th Seminar"
+description: JWT, REST API, CORS
+date:   2020-11-21 20:00:00 +0900
+categories: [ Others ]
+tags: [ server ]
+---
+
+### 1. JWT
+> ### <u>인증(Authentication)</u>
+
+API 요청에 대해 사용 가능한 사용자인지 확인하는 절차!  
+즉, 클라이언트가 주장하는 사용자와 같은 사용자인지를 확인하는 절차이다.
+
+<br>
+
+> ### <u>HTTP의 특징</u>
+
+HTTP는 다음의 특징들을 가진다.
+- **비 연결성(Connection less)**  
+클라이언트와 서버가 한 번 연결을 맺고, 클라이언트의 요청에 대해 서버가 응답을 하면 맺었던 연결을 끊는다
+- **무 상태(state less)**  
+(위의) 비 연결성으로 인해 서버는 클라를 식별할 수가 없음.
+
+즉, 한 동작을 할 때마다 매번 인증을 해야 하는 문제점이 발생.  
+따라서, 다음의 방법들로 HTTP는 상태를 기억한다.
+- **쿠키(Cookie)**  
+key-value의 쌍으로 구성된, 사용자의 컴퓨터에 저장하는 작은 <u>기록 정보 파일</u>로,  
+HTTP에서 클라이언트의 상태를 PC에 저장한 후 필요 시 사용한다.  
+문제점: 클라이언트 로컬에 저장되기 때문에 정보변질/스나이핑의 위험이 있음
+- **세션**  
+일정 시간 동안 같은 사용자로부터 들어오는 모든 요구를 하나의 상태로 보고,  
+그 상태를 일정하게 유지시키는 기술  
+문제점: 서버의 세션 저장소를 사용하므로 추가 저장 공간 필요하고, 세션 저장소에 장애가 발생하면 인증에 문제가 생김.
+- <span style="color:blue"> **JWT(Json Web Token)** </span>  
+클라이언트의 세션 상태를 저장하지 않고, <u>필요한 정보를 토큰 body에 저장해서 클라이언트가 이를 증명서처럼 사용</u>
+
+> ### <u>JWT란?</u>
+JWT는 **`Header.Payload.Verify_Signature`** 으로 구성된다.  
+- Header: 서명에 사용된 알고리즘의 정보 - JWT 토큰 유형, 해시 알고리즘 등
+- Payload: 토큰의 정보를 작성 (클레임) - 클라에 대한 정보
+- Signature: 토큰이 중간에 변경되지 않았음을 검증 - Header의 알고리즘과 Secret Key로 Header와 Payload를 담음
+
+JWT는 다음의 특징들을 가진다.
+- **자가수용적**: JWT 자체적으로 필요한 모든 정보를 포함함
+- **보안성**: 정보가 담긴 데이터 (JSON객체)를 암호화함
+- **확장성**: 인증 저장소가(sessionDB) 필요하지 않음
+
+<br>
+
+> ### <u>JWT의 작동법</u>
+
+다음과 같은 방법으로 작동한다.  
+1. 클라이언트가 유저에 대한 정보 (email, pw 등)를 서버에게 보냄.
+2. 서버가 DB를 이용하여 정보의 유효성을 확인.
+3. 유저 정보 중 일부를 JWT Payload에 넣고 토큰 발행
+4. 클라이언트에게 토큰 발급
+5. 발급받은 토큰을 이용하여 서버에 요청 할 때마다 Request Header에 포함하여 자원을 access할 수 있는 유저인지 식별 후 자원 제공
+
+예시: 토큰 발급
+```javascript
+// include jwt
+const jwt = require('../modules/jwt');
+
+// 로그인 로직
+const user = await userService.signin(email, password, salt);
+
+// 토큰 발급
+const { accessToken, refreshToken } = await jwt.sign(user);
+```
+
+- **RefreshToken**  
+AccessToken이 만료되었을 때 새로 발급해주는 열쇠로, AccessToken과 함께 클라이언트에게 발급한다.  
+RefreshToken은 주로 DB에 저장하고, AccessToken보다 더 안전한 곳에 보관해야 함.  
+AccessToken은 만료 기간을 짧게 줄 수록 안전함 (1시간)
+RefreshToken은 이보다는 길게 설정 (2주)
+
+![jwt](https://imgur.com/k0rlLWZ.png)
+
+예시: 토큰 인증 (JWT 미들웨어)  
+1. `authUtil` 미들웨어 로직에서 decoded된 `user`의 객체를 `req.decoded`에 접근하여 할당
+2. `next()`를 호출하여 다음 미들웨어로 이동
+3. 이전 미들웨어에서 할당된 `req.decoded`에서 `id`를 가져옴
+
+```javascript
+// routes/users/index.js 에서 미들웨어 import
+const authUtils = require('../../middlewares/authUtil');
+
+// router에 미들웨어 등록 (signin, signup 빼고!)
+router.get('/profile', authUtils.checkToken, userController.getProfile);    
+
+// authUtils.checkToken 안에서 할 거 하고 req.decoded에 user 할당, next() 호출
+var token = req.headers.jwt;
+const user = await jwt.verify(token);
+req.decoded = user;
+next();
+
+// userController 에서 req.decoded로 접근해서 정보 가져옴
+const { id } = req.decoded;
+```
+
+> ### <u>JWT의 장단점</u>
+
+**장점**  
+- 별도의 인증 저장소 필요없음 
+- 쿠키 사용할 필요없음 (취약점X)
+- 트래픽에 대한 부담 낮음
+- URL 파라미터와 헤더로 사용
+- 내장된 만료
+- REST 서비스로 제공 가능
+
+**단점**  
+- 자가수용적: 토큰 자체에 정보를 담고 있으니, 양날의 검이 될 수 있음
+- 토큰 길이: 정보가 많아질수록 토큰 길이가 늘어나 네트워크 부하를 줄 수 있음
+- payload 인코딩: payload를 탈취하여 디코딩하면 데이터를 볼 수 있으므로(BASE64) payload에 민감한 정보는 넣지 말아야 함
+- expired: 토큰을 탈취 당하면 제어가 불가능해짐(임의 삭제 불가능). 따라서 accessToken의 만료 시간을 짧게 설정해야 함. (근데, 너무 짧으면 만료될 때마다 HTTP 요청 횟수가 많아짐)
+
+<br>
+
+### 2. REST API
+> ### <u>URI와 URL</u>
+
+**URI(Uniform Resource Identifier, 통합 자원 식별자)**  
+인터넷에 있는 자원을 나타내는 유일한 주소
+
+**URL(Uniform Resource Locator, 유일 자원 시기)**  
+네트워크 상에서 자원이 어디있는지 알려주기 위한 규약
+
+→ URI는 URL을 포함한 개념!  
+ex) `https://site.com/post?id=123` : URI 이지만, URL은 아니다
+
+<br>
+
+> ### <u>REST API란?</u>
+
+REST 아키텍처의 제약 조건을 준수하는 애플리케이션 프로그래밍 인터페이스  
+(**RE**presentatinal **S**tate **T**ransfer API)
+
+REST 구성:
+- 자원 (RESOURCE) : URI
+- 행위 (Verb) : HTTP METHOD
+- 표현 (Representations)
+
+**REST API의 6가지 제약 조건**
+- **Uniform Interface**  
+URI로 지정한 리소스에 대한 조작을 통일되고 한정적인 인터페이스로 수행
+- **Stateless**  
+세션 정보, 쿠키 정보 저장 관리 X → 들어오는 요청 처리만 하면 되니까, 단순히 구현 가능
+- **Cacheable**  
+HTTP를 그대로 사용하기 때문에 웹에서 사용하는 기존 인프라를 그대로 활용 가능  
+즉, HTTP의 캐시 기능 적용 가능
+- **Self-descriptiveness**  
+REST API 메시지만 보고도 쉽게 이해할 수 있는 자체 표현 구조
+- **Client-Server 구조**  
+REST 서버 - API 제공 / 클라 - 사용자 인증, 컨텍스트 직접 관리  
+클라와 서버에서 개발해야할 내용이 명확해지고, 서로 간 의존성 줄어듦
+- **계층형 구조**  
+다중 계층으로 구성될 수 있으며 보안, 로드 밸런싱, 암호화 게층을 추가해 구조상의 유연성을 둘 수 있고 PROXY, 게이트웨이 같은 네트워크 기반의 중간 매체를 사용할 수 있음.
+
+<br>
+
+> ### <u>REST API 디자인 가이드</u>(핵심)
+
+**1. URI는 정보의 자원을 표현해야 함**  
+리소스 명은 동사보다는 명사를 사용한다  
+ex) `GET /members`
+
+**2. 자원에 대한 행위는 HTTP Method(GET, POST, PUT, DELETE)로 표현함**  
+ex) `POST /members/1`, `DELETE /members/1`
+
+<br>
+
+> ### <u>REST API 주의사항</u>
+
+1. 슬래시 구분자(/)는 계층 관계를 나타내는데 사용  
+ex) `http://site.com/animal/mammals/whales`  
+
+2. URI 마지막 문자로 슬래시를 포함하지 않는다.
+
+3. 하이폰(-)는 URI 가독성을 높이는데 사용  
+ex) `http://site.com/sopt-server-team`  
+
+4. 밑줄(_)는 URI에 사용하지 않는다.
+
+5. URI 경로에는 소문자가 적합하다.
+
+6. 파일 확장자는 URI에 포함시키지 않는다. (Accept Header 이용)  
+ex) `GET/ /sopt/server HTTP/ 1.1 Host:site.com Accept: image/jpg`
+
+7. REST 리소스 간의 연관관계가 있는 경우, (일반적으로 소유 has 의 관계) 
+`/리소스명/리소스ID/관계 있는 다른 리소스명`  
+ex) `GET/ /users/{userid}/devices`  
+관계 명이 애매하거나 구체적 표현이 필요할 때는,  
+ex) `GET/ /users/{userid}/likes/devices`
+
+8. 자원을 표현하는 Collection과 Document  
+Document은 한 객체를 의미하며, Collection은 객체들의 집합  
+도큐먼트를 단수, 컬렉션을 복수로 표현하면 이해하기 좋다!
+
+<br>
+
+### 3. API 명세서
+
+**API (Application Programming Interface) 란?**  
+서버 애플리케이션의 기능을 사용하기 위한 방법/수단!  
+즉, 클라가 서버의 API를 사용하기 위해 참고하는 사용설명서
+
+**구성 요소**  
+- API 이름
+- HTTP METHOD
+- Content
+- Type
+- 요청 헤더/바디
+- 응답 바디
